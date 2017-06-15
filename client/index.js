@@ -6,7 +6,7 @@ import { Provider } from 'react-redux';
 import { Router, Route, browserHistory } from 'react-router';
 import store from './store';
 import { Main } from './components';
-import socketListeners from './clientSocket';
+import HEYLISTEN from './clientSocket';
 
 ReactDOM.render(
   <Provider store={store}>
