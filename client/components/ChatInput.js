@@ -1,6 +1,6 @@
 import React from 'react';
 
-const ChatInput = (props) => {
+const ChatInput = ({ handleChange, handleSubmit, inputValue, warning }) => {
 
   const formStyles = {
       background: `#000`,
@@ -24,15 +24,22 @@ const ChatInput = (props) => {
     padding: `10px`
   };
 
+
   return (
-    <form action="" style={formStyles}>
-      <input
-        id="chatInput"
-        autoComplete="off"
-        placeholder="Send a message..."
-      />
-      <button>Send</button>
-    </form>
+    <div>
+      <form style={formStyles} onSubmit={handleSubmit}>
+        <fieldset>
+          <input
+            id="chatInput"
+            type="text"
+            placeholder="Send a message..."
+            onChange={handleChange}
+            value={inputValue}
+          />
+          <button type="submit">Send</button>
+        </fieldset>
+      </form>
+    </div>
   );
 };
 

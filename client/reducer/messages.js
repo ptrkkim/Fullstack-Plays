@@ -8,7 +8,7 @@ const defaultMessages = [{
   text: 'Welcome to the game!'
 }];
 
-const addMessage = message => ({type: ADD_MESSAGE, message });
+export const addMessage = message => ({type: ADD_MESSAGE, message });
 
 export default function (state = defaultMessages, action) {
   switch (action.type) {
