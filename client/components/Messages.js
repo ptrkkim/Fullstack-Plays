@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-const Chat = ({ messages }) => {
+const Messages = ({ messages }) => {
   const ulStyles = {
     listStyleType: 'none'
   };
@@ -34,6 +34,6 @@ const mapState = ({ messages }) => {
   return { messages };
 };
 
-export default connect(mapState)(Chat);
+export default connect(mapState)(Messages);
 // later: calculate li height * number of messages
 // .animate scrolltop: height

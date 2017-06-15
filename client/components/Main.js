@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
-import Chat from './Chat';
+import Messages from './Messages';
 import InputContainer from '../containers/InputContainer';
 // Component //
 
@@ -15,7 +15,7 @@ const Main = props => {
   return (
     <div>
       <h1>stack.tv</h1>
-      <Chat />
+      <Messages />
       <InputContainer />
     </div>
   );

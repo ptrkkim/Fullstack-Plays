@@ -41,7 +41,6 @@ class InputContainer extends Component {
     evt.preventDefault();
     if (!this.state.inputValue.length) return;
     this.props.addMessage({
-      id: 1,
       sender: 'stackBot',
       text: this.state.inputValue
     });

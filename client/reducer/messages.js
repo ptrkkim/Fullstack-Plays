@@ -3,7 +3,6 @@ import { browserHistory } from 'react-router';
 const ADD_MESSAGE = 'ADD_MESSAGE';
 
 const defaultMessages = [{
-  id: 0,
   sender: 'stackBot',
   text: 'Welcome to the game!'
 }];
