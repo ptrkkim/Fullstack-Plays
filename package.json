@@ -4,7 +4,7 @@
   "description": "slither slither",
   "main": "index.js",
   "scripts": {
-    "start": "webpack -w & nodemon server",
+    "start": "webpack & nodemon server",
     "start-server": "nodemon server",
     "build-client": "webpack"
   },
