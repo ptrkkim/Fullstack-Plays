@@ -2,6 +2,13 @@ import React, { Component } from 'react';
 import ChatInput from '../components/ChatInput';
 import { addMessage } from '../reducer/messages';
 import { connect } from 'react-redux';
+// import io from 'socket.io-client';
+
+// const socket = io.connect(window.location.host, { reconnect: true });
+// // window.location.host was needed to make it work on Heroku, where I don't know the host port
+// socket.on('connect', () => {
+//   console.log('socket connected');
+// });
 
 const mapDispatchToProps = (dispatch) => {
   return {
@@ -32,7 +39,6 @@ class InputContainer extends Component {
 
   handleSubmit (evt) {
     evt.preventDefault();
-    // evt.stopPropagation();
     if (!this.state.inputValue.length) return;
     this.props.addMessage({
       id: 1,

@@ -4,7 +4,9 @@ const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const app = express();
 
-module.exports = app;
+const server = require('http').Server(app);
+
+module.exports = server;
 
 const createApp = () => app
   .use(morgan('dev'))
@@ -19,3 +21,5 @@ const createApp = () => app
     res.status(err.status || 500).send(err.message || 'Internal server error.'));
 
 createApp(app);
+
+module.exports = server;

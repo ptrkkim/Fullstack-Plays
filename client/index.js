@@ -7,6 +7,12 @@ import { Router, Route, browserHistory } from 'react-router';
 import store from './store';
 import { Main } from './components';
 
+import io from 'socket.io-client';
+
+const socket = io.connect(window.location.host, { reconnect: true });
+socket.on('connect', () => {
+  console.log('socket connected');
+});
 
 ReactDOM.render(
   <Provider store={store}>
