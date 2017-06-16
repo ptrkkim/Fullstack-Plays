@@ -13,7 +13,7 @@ const decrementNumber = () => ({type: DECREMENT});
 const defaultNumber = 0;
 
 // eventually, i can handle validity of grid movements in swith cases
-const gridReducer =  (state = defaultNumber, action) => {
+const numberReducer =  (state = defaultNumber, action) => {
   switch (action.type) {
     case INCREMENT:
       return state + 1;
@@ -22,13 +22,13 @@ const gridReducer =  (state = defaultNumber, action) => {
     default:
       return state;
   }
-}
+};
 
 
-// lets say client emits 'command', 
+// lets say client emits 'command',
 
 module.exports = {
   incrementNumber,
   decrementNumber,
-  gridReducer
+  numberReducer
 };

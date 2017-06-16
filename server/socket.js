@@ -1,9 +1,14 @@
 const server = require('./app');
 const socketio = require('socket.io');
-const increment = require('./serverReducer/grid').incrementNumber;
+const increment = require('./serverReducer/number').incrementNumber;
 const io = socketio(server);
 const serverStore = require('./serverStore');
 
+const sendState = () => {
+  // grid is actually currently an integer
+  const currentNumber = serverStore.getState().number;
+  io.emit('updateNumber', currentNumber);
+};
 // things to do when user
 io.on('connection', (userSocket) => {
   console.log(userSocket.id, 'a user connected');
@@ -45,12 +50,8 @@ io.on('connection', (userSocket) => {
 
 });
 
-const sendState = () => {
-  // grid is actually currently an integer
-  const currentNumber = serverStore.getState().grid;
-  io.emit('updateNumber', currentNumber);
-};
 
+// SYNCS ALL CLIENTS ON AN INTERVAL
 setInterval(sendState, 1000);
 
 // io.on('newMessage', (userSocket) => {

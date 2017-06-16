@@ -52,10 +52,14 @@ More advanced/efficient usage of react/redux?
 
   row implementation?
     grid = { 
-      row1: {cell1: 'blank', cell2: 'geoff', cell3: 'blank'},
-      row2: {cell1, 'blank', cell2: 'blank', cell3: 'blank'},
-      row3: {cell1, 'blank', cell2: 'blank', cell3: 'blank'}
+      row1: {col1: 'blank', col2: 'geoff', col3: 'blank'},
+      row2: {col1, 'blank', col2: 'blank', col3: 'blank'},
+      row3: {col1, 'blank', col2: 'blank', col3: 'blank'}
     }
+
+    geoffPos: {col: 0, row: 0}
+    user types right
+      emits command with 'right'
 
     io.emit('changedCells') with object {row: cell2: }
     clientSocket.on('changedCells')

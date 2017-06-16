@@ -1,6 +1,5 @@
-// import { combineReducers } from 'redux';
 const combineReducers = require('redux').combineReducers;
-const grid = require('./grid').gridReducer;
+const number = require('./number').numberReducer;
 
-// grid is actually currently an integer
-module.exports = combineReducers({ grid });
+// number is actually currently an integer
+module.exports = combineReducers({ number });
