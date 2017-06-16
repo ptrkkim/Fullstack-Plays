@@ -4,7 +4,7 @@ import io from 'socket.io-client';
 import { newNumber } from '../reducer/number';
 
 // set up listeners for server signals
-export const clientSocket = io(window.location.host, { reconnect: true });
+export const clientSocket = io(window.location.host /*, { reconnect: true } */);
 
 (() => {
   clientSocket.on('connect', () => {
