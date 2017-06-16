@@ -1,9 +1,9 @@
-// ACTIONS \\
+// ACTIONS BELOW \\
 // const UPDATE_GRID = 'UPDATE_GRID';
 
 const INCREMENT = 'INCREMENT';
 const DECREMENT = 'DECREMENT';
-// ACTION CREATORS \\
+// ACTION CREATORS BELOW \\
 
 const incrementNumber = () => ({type: INCREMENT });
 const decrementNumber = () => ({type: DECREMENT});
@@ -12,6 +12,7 @@ const decrementNumber = () => ({type: DECREMENT});
 // const defaultGrid;
 const defaultNumber = 0;
 
+// REDUCER BELOW \\
 // eventually, i can handle validity of grid movements in swith cases
 const numberReducer =  (state = defaultNumber, action) => {
   switch (action.type) {

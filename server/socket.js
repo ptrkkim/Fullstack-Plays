@@ -54,13 +54,4 @@ io.on('connection', (userSocket) => {
 // SYNCS ALL CLIENTS ON AN INTERVAL
 setInterval(sendState, 1000);
 
-// io.on('newMessage', (userSocket) => {
-//   io.emit('receiveMsg', {
-//     sender: 'server',
-//     text: `HELLO EVERYBODY I AM ${userSocket.id}`
-//   });
-// });
-
-
-
 module.exports = server;
