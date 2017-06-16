@@ -46,55 +46,76 @@ const gridReducer = (state = defaultGrid, action) => {
 
   switch (action.type) {
     case LEFT: {
-      const newGrid = moveLeftAndRight(state, 'left');
-      return newGrid;
+      return moveLeftAndRight(state, 'left');
     }
     case RIGHT: {
-      const newGrid = moveLeftAndRight(state, 'right');
-      return newGrid;
+      return moveLeftAndRight(state, 'right');
     }
     case UP: {
-      return state;
+      return moveUpAndDown(state, 'up');
     }
     case DOWN: {
-      return state;
+      return moveUpAndDown(state, 'down');
     }
     default:
       return state;
   }
 };
 
+function moveUpAndDown(state, upOrDown) {
+  const { oldPlayerPos, oldPlayerRowInd, oldPlayerColInd } = getOldPositionInfo(state);
+  const atEdge = (upOrDown === 'up')
+    ? oldPlayerPos.row === 0
+    : oldPlayerPos.row === (gridSize - 1);
+
+  if (atEdge) return state;
+
+  const newRowVal = (upOrDown === 'up')
+    ? oldPlayerPos.row - 1
+    : oldPlayerPos.row + 1;
+
+  const newPos = Object.assign({}, oldPlayerPos, { row: newRowVal });
+  const newRowInd = `row${newPos.row}`;
+  const updatedRows  = {
+    [newRowInd]: Object.assign(state[newRowInd], { [oldPlayerColInd]: 'player' }),
+    [oldPlayerRowInd]: Object.assign(state[oldPlayerRowInd], { [oldPlayerColInd]: 'blank' })
+  };
+
+  return Object.assign(
+    state,
+    {playerPos: newPos},
+    updatedRows
+  );
+}
 
 function moveLeftAndRight (state, leftOrRight) {
-  const { oldPlayerPos, oldPlayerRow, oldPlayerCol } = getOldPositionInfo(state);
+  const { oldPlayerPos, oldPlayerRowInd, oldPlayerColInd } = getOldPositionInfo(state);
   const atEdge = (leftOrRight === 'left')
-    ? oldPlayerPos.col > 0
-    : oldPlayerPos.col < (gridSize - 1);
+    ? oldPlayerPos.col === 0
+    : oldPlayerPos.col === (gridSize - 1);
+
+  if (atEdge) return state;
 
   const newColVal = (leftOrRight === 'left')
     ? oldPlayerPos.col - 1
     : oldPlayerPos.col + 1;
 
-  const newPos = atEdge
-    ? Object.assign({}, oldPlayerPos, { col: newColVal }) // moves player right if not at edge
-    : oldPlayerPos;
-  if (newPos === oldPlayerPos) return state;
-
-  const newPlayerCol   = `col${newPos.col}`;
-  const updatedColumns = {[newPlayerCol]: 'player', [oldPlayerCol]: 'blank'};
+  const newPos         = Object.assign({}, oldPlayerPos, { col: newColVal }); // moves player if not at edge
+  const newColInd   = `col${newPos.col}`;
+  const updatedColumns = {[newColInd]: 'player', [oldPlayerColInd]: 'blank'};
 
   return Object.assign(
     state,
     {playerPos: newPos},
-    {[oldPlayerRow]: Object.assign(state[oldPlayerRow], updatedColumns)}
+    {[oldPlayerRowInd]: Object.assign(state[oldPlayerRowInd], updatedColumns)}
   );
 }
 
 function getOldPositionInfo (state) {
   const oldPlayerPos = state.playerPos;
-  const oldPlayerRow = `row${oldPlayerPos.row}`;
-  const oldPlayerCol = `col${oldPlayerPos.col}`;
-  return { oldPlayerPos, oldPlayerRow, oldPlayerCol };
+  const oldPlayerRowInd = `row${oldPlayerPos.row}`;
+  const oldPlayerColInd = `col${oldPlayerPos.col}`;
+  return { oldPlayerPos, oldPlayerRowInd, oldPlayerColInd };
 }
 // const updatedRow = Object.assign(state[oldPlayerRow], {col1: 'player', col2: 'blank'})
 // lets say client emits 'command',
