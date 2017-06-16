@@ -17,3 +17,4 @@ export default function (state = defaultMessages, action) {
       return state;
   }
 }
+

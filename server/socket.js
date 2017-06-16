@@ -1,8 +1,10 @@
 const server = require('./app');
 const socketio = require('socket.io');
-
+const increment = require('./serverReducer/grid').incrementNumber;
 const io = socketio(server);
+const serverStore = require('./serverStore');
 
+// things to do when user
 io.on('connection', (userSocket) => {
   console.log(userSocket.id, 'a user connected');
 
@@ -15,17 +17,40 @@ io.on('connection', (userSocket) => {
     io.emit('receiveMsg', message);
   });
 
+  // just for testing
+  userSocket.on('command', (command) => {
+    serverStore.dispatch(increment());
+    // commented code simply sends the command back to all
+    // therefore upon a user sending 'up', all users receive two messages
+    // const message = {
+    //   sender: 'commander',
+    //   text: `valid command: ${command}`
+    // };
+
+    // io.emit('receiveMsg', message);
+  });
+
   userSocket.on('disconnect', () => {
     console.log(userSocket.id, 'disconnected');
   });
 
 });
 
-io.on('newMessage', (userSocket) => {
-  io.emit('receiveMsg', {
-    sender: 'server',
-    text: `HELLO EVERYBODY I AM ${userSocket.id}`
-  });
-});
+const sendState = () => {
+  // grid is actually currently an integer
+  const currentNumber = serverStore.getState().grid;
+  io.emit('updateNumber', currentNumber);
+};
+
+setInterval(sendState, 1000);
+
+// io.on('newMessage', (userSocket) => {
+//   io.emit('receiveMsg', {
+//     sender: 'server',
+//     text: `HELLO EVERYBODY I AM ${userSocket.id}`
+//   });
+// });
+
+
 
 module.exports = server;

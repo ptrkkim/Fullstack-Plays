@@ -37,10 +37,26 @@ class InputContainer extends Component {
   handleSubmit (evt) {
     evt.preventDefault();
     if (!this.state.inputValue.length) return;
+
+    const text = this.state.inputValue;
+    const commands = {
+      up: 'up'
+      // down: 'down',
+      // left: 'left',
+      // right: 'right'
+    };
+
+    // emits a command if input is a valid game command
+    if (commands[text]) {
+      clientSocket.emit('command', text);
+    }
+
+    // messaging logic, always happens
     clientSocket.emit('newMsg', {
       sender: 'stackBot',
-      text: this.state.inputValue
+      text
     });
+
     this.setState({ inputValue: '' });
   }
 

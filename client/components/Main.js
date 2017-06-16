@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import Messages from './Messages';
 import InputContainer from '../containers/InputContainer';
+import Numbers from '../components/Numbers';
 // Component //
 
 const Main = props => {
@@ -15,6 +16,7 @@ const Main = props => {
   return (
     <div>
       <h1>stack.tv</h1>
+      <Numbers />
       <Messages />
       <InputContainer />
     </div>
