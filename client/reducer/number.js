@@ -1,5 +1,3 @@
-import { browserHistory } from 'react-router';
-
 const NEW_NUMBER = 'NEW_NUMBER';
 
 const defaultNumber = 0;

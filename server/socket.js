@@ -1,15 +1,23 @@
 const server = require('./app');
 const socketio = require('socket.io');
 const increment = require('./serverReducer/number').incrementNumber;
+const move = require('./serverReducer/grid').move;
 const io = socketio(server);
 const serverStore = require('./serverStore');
 
-const sendState = () => {
+const sendNumberState = () => {
   // grid is actually currently an integer
   const currentNumber = serverStore.getState().number;
   io.emit('updateNumber', currentNumber);
 };
-// things to do when user
+
+const sendGridState = () => {
+
+  const sharedGrid = serverStore.getState().grid; // { row1 : {col1, col2}... }
+  io.emit('updateGrid', sharedGrid);
+};
+
+// things to do when user connects
 io.on('connection', (userSocket) => {
   console.log(userSocket.id, 'a user connected');
 
@@ -19,7 +27,7 @@ io.on('connection', (userSocket) => {
   // componentDidMount or componentWillMount to request game state
   // upon clientside grid loading, emit 'request current state'
   // send back the current state, regardless of tick.
-  sendState();
+  sendNumberState();
 
   userSocket.broadcast.emit('receiveMsg', {
       sender: 'server',
@@ -31,8 +39,9 @@ io.on('connection', (userSocket) => {
     io.emit('receiveMsg', message);
   });
 
-  // just for testing
+  // number + increment is just for testing
   userSocket.on('command', (command) => {
+    serverStore.dispatch(move(command)); // e.g. { type: 'LEFT' }
     serverStore.dispatch(increment());
     // commented code simply sends the command back to all
     // therefore upon a user sending 'up', all users receive two messages
@@ -52,6 +61,7 @@ io.on('connection', (userSocket) => {
 
 
 // SYNCS ALL CLIENTS ON AN INTERVAL
-setInterval(sendState, 1000);
+// setInterval(sendNumberState, 1000);
+setInterval(sendGridState, 3000);
 
 module.exports = server;

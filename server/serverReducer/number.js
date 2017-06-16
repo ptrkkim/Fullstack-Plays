@@ -14,7 +14,7 @@ const defaultNumber = 0;
 
 // REDUCER BELOW \\
 // eventually, i can handle validity of grid movements in swith cases
-const numberReducer =  (state = defaultNumber, action) => {
+const numberReducer = (state = defaultNumber, action) => {
   switch (action.type) {
     case INCREMENT:
       return state + 1;
