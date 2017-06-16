@@ -14,4 +14,8 @@ export const clientSocket = io(window.location.host, { reconnect: true });
   clientSocket.on('receiveMsg', (message) => {
     store.dispatch(addMessage(message));
   });
+
+  clientSocket.on('receiveGrid', (grid) => {
+    store.dispatch(receiveGrid(grid));
+  });
 })();
