@@ -8,8 +8,7 @@ export const clientSocket = io(window.location.host, { reconnect: true });
 
 (() => {
   clientSocket.on('connect', () => {
-    console.log('socket connected');
-    console.log('ANOTHER MESSAGE');
+    console.log('You are connected to the server.');
   });
 
   clientSocket.on('receiveMsg', (message) => {

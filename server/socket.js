@@ -8,10 +8,19 @@ const serverStore = require('./serverStore');
 io.on('connection', (userSocket) => {
   console.log(userSocket.id, 'a user connected');
 
+  // will send current game state on load
+  // FUTURE:
+  // depending on how fast this is, may need to use lifecycle hook
+  // componentDidMount or componentWillMount to request game state
+  // upon clientside grid loading, emit 'request current state'
+  // send back the current state, regardless of tick.
+  sendState();
+
   userSocket.broadcast.emit('receiveMsg', {
       sender: 'server',
       text: `${userSocket.id} has joined.`
     });
+
 
   userSocket.on('newMsg', (message) => {
     io.emit('receiveMsg', message);
