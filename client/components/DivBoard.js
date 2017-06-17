@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import Row from './Row';
 
-const Board = ({ board }) => {
+const Board = ({ grid, size }) => {
 
   const boardContainerStyles = {
     display: 'flex',
@@ -23,8 +23,12 @@ const Board = ({ board }) => {
     <div style={boardContainerStyles}>
       <div id="grid" style={gridStyles}>
         {
-          board && Object.values(board).map((row, rInd) => {
-            return <Row key={`row${rInd}`} columns={row} />;
+          grid && Object.values(grid).map((row, rInd) => {
+            return (<Row
+              key={`row${rInd}`}
+              columns={row}
+              rInd={rInd}
+              size={size} />);
           })
         }
       </div>
@@ -33,7 +37,10 @@ const Board = ({ board }) => {
 };
 
 const mapState = ({ board }) => {
-  return { board };
+  return {
+    grid: board.grid,
+    size: board.size
+  };
 };
 
 export default connect(mapState)(Board);

@@ -6,6 +6,7 @@ import Messages from './Messages';
 import InputContainer from '../containers/InputContainer';
 import Numbers from '../components/Numbers';
 import Board from '../components/Board';
+import DivBoard from '../components/DivBoard';
 // import GameBoardContainer from '../containers/GameBoard';
 // Component //
 
@@ -14,7 +15,8 @@ const Main = props => {
     <div>
       <h1>stack.tv</h1>
       <Numbers />
-      <Board />
+      <DivBoard />
+      {/* <Board /> */}
       <Messages />
       <InputContainer />
     </div>
