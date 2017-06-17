@@ -1,19 +1,17 @@
 const server = require('./app');
 const socketio = require('socket.io');
-const increment = require('./serverReducer/number').incrementNumber;
+// const increment = require('./serverReducer/number').incrementNumber;
 const move = require('./serverReducer/grid').move;
 const io = socketio(server);
 const serverStore = require('./serverStore');
 
-const sendNumberStateTo = (userSocket) => {
-  // grid is actually currently an integer
-  const currentNumber = serverStore.getState().number;
-  if (userSocket) { userSocket.emit('updateNumber', currentNumber); }
-  else { io.emit('updateNumber', currentNumber); }
-};
+// const sendNumberStateTo = (userSocket) => {
+//   const currentNumber = serverStore.getState().number;
+//   if (userSocket) { userSocket.emit('updateNumber', currentNumber); }
+//   else { io.emit('updateNumber', currentNumber); }
+// };
 
 const sendGridStateTo = (userSocket) => {
-
   const sharedGrid = serverStore.getState().grid; // { row1 : {col1, col2}... }
   if (userSocket) { userSocket.emit('updateGrid', sharedGrid); }
   else { io.emit('updateGrid', sharedGrid); }
@@ -29,7 +27,8 @@ io.on('connection', (userSocket) => {
   // componentDidMount or componentWillMount to request game state
   // upon clientside grid loading, emit 'request current state'
   // send back the current state, regardless of tick.
-  sendNumberStateTo(userSocket);
+
+  // sendNumberStateTo(userSocket);
   sendGridStateTo(userSocket);
 
   userSocket.broadcast.emit('receiveMsg', {
@@ -37,23 +36,13 @@ io.on('connection', (userSocket) => {
       text: `${userSocket.id} has joined.`
     });
 
-
   userSocket.on('newMsg', (message) => {
     io.emit('receiveMsg', message);
   });
 
-  // number + increment is just for testing
   userSocket.on('command', (command) => {
     serverStore.dispatch(move(command)); // e.g. { type: 'LEFT' }
     // serverStore.dispatch(increment());
-    // commented code simply sends the command back to all
-    // therefore upon a user sending 'up', all users receive two messages
-    // const message = {
-    //   sender: 'commander',
-    //   text: `valid command: ${command}`
-    // };
-
-    // io.emit('receiveMsg', message);
   });
 
   userSocket.on('disconnect', () => {
@@ -62,9 +51,8 @@ io.on('connection', (userSocket) => {
 
 });
 
-
 // SYNCS ALL CLIENTS ON AN INTERVAL
-setInterval(sendNumberStateTo, 5000);
+// setInterval(sendNumberStateTo, 5000);
 setInterval(sendGridStateTo, 3000);
 
 module.exports = server;

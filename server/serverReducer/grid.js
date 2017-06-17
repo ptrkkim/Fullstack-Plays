@@ -11,10 +11,12 @@ const { UP, DOWN, LEFT, RIGHT } = directions;
 
 // ACTION CREATORS BELOW \\
 
-// direction formerly command, may switch back or separate more advanced
-// commands to another reducer
 const move = (direction) => ({ type: directions[direction] });
-// let's just test with a number we can increment up or down?
+
+//REDUCER BELOW \\
+// eventually, i can handle validity of grid movements in switch cases
+// full grid can be obtained and sent to new players via serverStore.getState();
+
 const gridSize = 3;
 const gridStructure = Array(gridSize).fill(null).map((el, ind) => ind);
 const defaultGrid = {};
@@ -37,13 +39,7 @@ defaultGrid.playerPos = { row: 1, col: 1 };
 //   playerPos: { row: 1, col: 1 }
 // };
 
-
-//REDUCER BELOW \\
-// eventually, i can handle validity of grid movements in switch cases
-// full grid can be obtained and sent to new players via serverStore.getState();
-
 const gridReducer = (state = defaultGrid, action) => {
-
   switch (action.type) {
     case LEFT: {
       return moveLeftAndRight(state, 'left');
@@ -117,8 +113,6 @@ function getOldPositionInfo (state) {
   const oldPlayerColInd = `col${oldPlayerPos.col}`;
   return { oldPlayerPos, oldPlayerRowInd, oldPlayerColInd };
 }
-// const updatedRow = Object.assign(state[oldPlayerRow], {col1: 'player', col2: 'blank'})
-// lets say client emits 'command',
 
 module.exports = {
   move,
