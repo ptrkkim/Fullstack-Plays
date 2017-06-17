@@ -17,7 +17,7 @@ const Board = ({ board }) => {
   return (
     <div>
       <table style={tableStyles}>
-      {board && Object.values(board).map((row, rInd) => {
+      {board && Object.values(board.grid).map((row, rInd) => {
         const rowKey = `row${rInd}`;
         return (
           <tr key={`row${rInd}`}>
@@ -29,7 +29,7 @@ const Board = ({ board }) => {
                   key={`${rowKey}-${colKey}`}
                   style={tdStyles}
                   >
-                    {board[rowKey][colKey]}
+                    {board.grid[rowKey][colKey]}
                   </td>);
               })
             }
