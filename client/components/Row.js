@@ -24,8 +24,3 @@ const Row = ({ columns, size, rInd }) => {
 };
 
 export default Row;
-// switch (content) {
-//   case 'player':
-//     return <div key={`row${rInd}-col${cInd}`} style={playerStyles} />;
-//   default:
-//     return <div key={`row${rInd}-col${cInd}`} style={blankStyles} />;

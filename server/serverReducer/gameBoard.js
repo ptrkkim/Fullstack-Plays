@@ -15,10 +15,10 @@ const move = (direction) => ({ type: directions[direction] });
 
 //REDUCER BELOW \\
 
-const gridSize = 3;
+const gridSize = 5;
 const gridStructure = Array(gridSize).fill(null).map((el, ind) => ind);
 const defaultBoard = {
-  playerPos: { row: 1, col: 1},
+  playerPos: { row: 2, col: 2},
   grid: {}
 };
 

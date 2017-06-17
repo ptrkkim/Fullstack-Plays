@@ -1,16 +1,14 @@
 {
-  "name": "Fullstack Plays",
+  "name": "FullstackPlays",
   "version": "1.0.0",
-  "description": "FSA Hackathon project. All connected users can interact
-    via chat, and if they type a valid game command, the game state will change.
-    Thus, users can collaboratively make decisions and play games together",
+  "description": "FSA Hackathon project. All connected users can interact via chat, and if they type a valid game command, the game state will change. Thus, users can collaboratively make decisions and play games together",
   "main": "index.js",
   "scripts": {
     "start": "webpack & nodemon server",
     "start-server": "nodemon server",
     "build-client": "webpack"
   },
-  "author": "",
+  "author": "Tae-Young Patrick Kim",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.16.1",

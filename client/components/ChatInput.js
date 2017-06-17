@@ -1,4 +1,5 @@
 import React from 'react';
+import { Button, FormGroup, FormControl } from 'react-bootstrap';
 
 const ChatInput = ({ handleChange, handleSubmit, inputValue, warning }) => {
 
@@ -7,40 +8,61 @@ const ChatInput = ({ handleChange, handleSubmit, inputValue, warning }) => {
       padding: `3px`,
       position: `fixed`,
       bottom: 0,
-      width: `100%`
+      width: `inherit`
     };
 
   const inputStyles = {
-    border: 0,
-    padding: `10px`,
-    width: `90%`,
+    display: `inline-block`,
+    padding: `6px 12px`,
+    width: `84%`,
     margin: `0 .5% 0 0`
   };
 
   const buttonStyles = {
-    width: `9%`,
-    background: `rgb(130, 224, 255)`,
-    border: `none`,
-    padding: `10px`
+    display: `inline-block`,
+    padding: `6px 1px`,
+    marginBottom: `1px`,
+    width: `12%`,
+    background: `rgb(130, 224, 255)`
   };
 
 
   return (
-    <div>
-      <form style={formStyles} onSubmit={handleSubmit}>
+    <div style={formStyles}>
+      <form onSubmit={handleSubmit}>
+        <FormGroup role="form">
+          <FormControl
+            style={inputStyles}
+            id="chatInput"
+            placeholder="Send a message..."
+            type="text"
+            onChange={handleChange}
+            value={inputValue}
+          />
+          <Button style={buttonStyles} type="submit">Chat</Button>
+        </FormGroup>
+      </form>
+    </div>
+  );
+/*
+  return (
+    <div style={formStyles}>
+      <form onSubmit={handleSubmit}>
         <fieldset>
           <input
+            style={inputStyles}
             id="chatInput"
             type="text"
             placeholder="Send a message..."
             onChange={handleChange}
             value={inputValue}
           />
-          <button type="submit">Send</button>
+          <Button style={buttonStyles} type="submit">Chat</Button>
         </fieldset>
       </form>
     </div>
   );
+*/
 };
 
 export default ChatInput;

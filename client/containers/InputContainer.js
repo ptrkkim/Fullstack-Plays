@@ -1,19 +1,6 @@
 import React, { Component } from 'react';
 import ChatInput from '../components/ChatInput';
-import { addMessage } from '../reducer/messages';
-import { connect } from 'react-redux';
 import { clientSocket } from '../clientSocket';
-// import io from 'socket.io-client';
-
-// const clientSocket = io(window.location.host, { reconnect: true });
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    addMessage (message) {
-      dispatch(addMessage(message));
-    }
-  };
-};
 
 class InputContainer extends Component {
 
@@ -79,7 +66,4 @@ class InputContainer extends Component {
   }
 }
 
-export default connect(
-  null,
-  mapDispatchToProps
-)(InputContainer);
+export default InputContainer;

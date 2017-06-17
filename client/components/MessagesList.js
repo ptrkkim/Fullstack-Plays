@@ -1,7 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-const Messages = ({ messages }) => {
+// sender has two props: name and color
+const MessagesList = ({ messages, sender }) => {
+
+  // text color #19171c;
   const ulStyles = {
     listStyleType: 'none'
   };
@@ -30,10 +33,10 @@ const Messages = ({ messages }) => {
   );
 };
 
-const mapState = ({ messages }) => {
-  return { messages };
+const mapState = ({ messages, sender }) => {
+  return { messages, sender };
 };
 
-export default connect(mapState)(Messages);
+export default connect(mapState)(MessagesList);
 // later: calculate li height * number of messages
 // .animate scrolltop: height

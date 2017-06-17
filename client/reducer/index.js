@@ -1,12 +1,12 @@
 import { combineReducers } from 'redux';
 import number from './number';
-import team from './team';
+import sender from './sender';
 import messages from './messages';
 import board from './board';
 
 export default combineReducers({
   number,
-  team,
+  sender,
   messages,
   board
 });
