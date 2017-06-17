@@ -19,7 +19,6 @@ const gridSize = 3;
 const gridStructure = Array(gridSize).fill(null).map((el, ind) => ind);
 const defaultBoard = {
   playerPos: { row: 1, col: 1},
-  size: gridSize,
   grid: {}
 };
 
@@ -36,28 +35,22 @@ defaultBoard.grid.row1.col1 = 'player';
 // const gridLooksLike = {
 //   row1: {col1: 'blank', col2: 'blank', col3: 'blank'},
 //   row2: {col1: 'blank', col2: 'blank', col3: 'blank'},
-///  row3: {col1: 'blank', col2: 'blank', col3: 'blank'},
-//   playerPos: { row: 1, col: 1 }
+//   row3: {col1: 'blank', col2: 'blank', col3: 'blank'},
 // };
 
 const boardReducer = (state = defaultBoard, action) => {
   const { playerPos, grid } = state;
   switch (action.type) {
-    case LEFT: {
       // will intentionally not returning entirely new state trigger selective rerender
       // if nested objects become entirely new objects?
-      // moveLeftAndRight returns {playerPos, grid}
+    case LEFT:
       return Object.assign(state, moveLeftAndRight(grid, playerPos, 'left'));
-    }
-    case RIGHT: {
+    case RIGHT:
       return Object.assign(state, moveLeftAndRight(grid, playerPos, 'right'));
-    }
-    case UP: {
+    case UP:
       return Object.assign(state, moveUpAndDown(grid, playerPos, 'up'));
-    }
-    case DOWN: {
+    case DOWN:
       return Object.assign(state, moveUpAndDown(grid, playerPos, 'down'));
-    }
     default:
       return state;
   }

@@ -1,5 +1,3 @@
-import { browserHistory } from 'react-router';
-
 const ADD_MESSAGE = 'ADD_MESSAGE';
 
 const defaultMessages = [{

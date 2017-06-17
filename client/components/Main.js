@@ -5,6 +5,7 @@ import { Link } from 'react-router';
 import Messages from './Messages';
 import InputContainer from '../containers/InputContainer';
 import Numbers from '../components/Numbers';
+// import GameBoardContainer from '../containers/GameBoard';
 // Component //
 
 const Main = props => {
