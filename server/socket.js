@@ -1,7 +1,7 @@
 const server = require('./app');
 const socketio = require('socket.io');
 // const increment = require('./serverReducer/number').incrementNumber;
-const move = require('./serverReducer/grid').move;
+const move = require('./serverReducer/gameBoard').move;
 const io = socketio(server);
 const serverStore = require('./serverStore');
 
@@ -11,10 +11,10 @@ const serverStore = require('./serverStore');
 //   else { io.emit('updateNumber', currentNumber); }
 // };
 
-const sendGridStateTo = (userSocket) => {
-  const sharedGrid = serverStore.getState().grid; // { row1 : {col1, col2}... }
-  if (userSocket) { userSocket.emit('updateGrid', sharedGrid); }
-  else { io.emit('updateGrid', sharedGrid); }
+const sendBoardStateTo = (userSocket) => {
+  const sharedBoard = serverStore.getState().gameBoard; // { row1 : {col1, col2}... }
+  if (userSocket) { userSocket.emit('updateBoard', sharedBoard); }
+  else { io.emit('updateBoard', sharedBoard); }
 };
 
 // things to do when user connects
@@ -25,11 +25,11 @@ io.on('connection', (userSocket) => {
   // FUTURE:
   // depending on how fast this is, may need to use lifecycle hook
   // componentDidMount or componentWillMount to request game state
-  // upon clientside grid loading, emit 'request current state'
+  // upon clientside gameBoard loading, emit 'request current state'
   // send back the current state, regardless of tick.
 
   // sendNumberStateTo(userSocket);
-  sendGridStateTo(userSocket);
+  sendBoardStateTo(userSocket);
 
   userSocket.broadcast.emit('receiveMsg', {
       sender: 'server',
@@ -53,6 +53,6 @@ io.on('connection', (userSocket) => {
 
 // SYNCS ALL CLIENTS ON AN INTERVAL
 // setInterval(sendNumberStateTo, 5000);
-setInterval(sendGridStateTo, 3000);
+setInterval(sendBoardStateTo, 3000);
 
 module.exports = server;

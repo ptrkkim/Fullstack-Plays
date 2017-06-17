@@ -20,8 +20,8 @@ export const clientSocket = io(window.location.host /*, { reconnect: true } */);
     store.dispatch(newNumber(serverStoreState));
   });
 
-  clientSocket.on('updateGrid', (grid) => {
-    console.log(grid);
+  clientSocket.on('updateBoard', (board) => {
+    console.log(board);
     // store.dispatch(updateGrid(grid));
   });
 })();
