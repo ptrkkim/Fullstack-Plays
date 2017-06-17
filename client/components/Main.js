@@ -5,19 +5,16 @@ import { Link } from 'react-router';
 import Messages from './Messages';
 import InputContainer from '../containers/InputContainer';
 import Numbers from '../components/Numbers';
+import Board from '../components/Board';
 // import GameBoardContainer from '../containers/GameBoard';
 // Component //
 
 const Main = props => {
-  const initMessages = [{
-  id: 0,
-  sender: 'stackBot',
-  text: 'Welcome to the game!'
-}]
   return (
     <div>
       <h1>stack.tv</h1>
       <Numbers />
+      <Board />
       <Messages />
       <InputContainer />
     </div>

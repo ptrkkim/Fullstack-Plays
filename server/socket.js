@@ -12,7 +12,7 @@ const serverStore = require('./serverStore');
 // };
 
 const sendBoardStateTo = (userSocket) => {
-  const sharedBoard = serverStore.getState().gameBoard; // { row1 : {col1, col2}... }
+  const sharedBoard = serverStore.getState().gameBoard.grid; // { row1 : {col1, col2}... }
   if (userSocket) { userSocket.emit('updateBoard', sharedBoard); }
   else { io.emit('updateBoard', sharedBoard); }
 };
@@ -53,6 +53,6 @@ io.on('connection', (userSocket) => {
 
 // SYNCS ALL CLIENTS ON AN INTERVAL
 // setInterval(sendNumberStateTo, 5000);
-setInterval(sendBoardStateTo, 3000);
+setInterval(sendBoardStateTo, 1000);
 
 module.exports = server;

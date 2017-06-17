@@ -1,20 +1,48 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import Row from './Row';
+// import Row from './Row';
 
-const Board = ({ grid }) => {
+const Board = ({ board }) => {
+
+  const tableStyles = {
+    margin: `0 auto`
+  };
+
+  const tdStyles = {
+    border: `1px solid #ddd`,
+    width: `18px`,
+    height: `18px`
+  };
 
   return (
     <div>
-      {
-      <Row rowId={index}/>
-      }
+      <table style={tableStyles}>
+      {board && Object.values(board).map((row, rInd) => {
+        const rowKey = `row${rInd}`;
+        return (
+          <tr key={`row${rInd}`}>
+            {
+              Object.values(row).map((col, cInd) => {
+                const colKey = `col${cInd}`;
+                return (
+                  <td
+                  key={`${rowKey}-${colKey}`}
+                  style={tdStyles}
+                  >
+                    {board[rowKey][colKey]}
+                  </td>);
+              })
+            }
+          </tr>
+          );
+      })}
+      </table>
     </div>
   );
 };
 
-const mapState = ({ grid }) => {
-  return { grid };
+const mapState = ({ board }) => {
+  return { board };
 };
 
 export default connect(mapState)(Board);
