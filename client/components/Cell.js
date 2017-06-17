@@ -24,10 +24,26 @@ const Cell = ({ content, size }) => {
     height: '50%',
     backgroundColor: 'transparent'
   };
+
+  const playerStyles = {
+    width: '50%',
+    height: '50%',
+    backgroundColor: '#555'
+  };
+
+  const getContentStyle = contentType => {
+    switch (contentType) {
+      case 'player':
+        return playerStyles;
+      default:
+        return blankStyles;
+    }
+  };
+
   return (
     <div style={cellStyles}>
       <div style={contentStyles}>
-        <div style={blankStyles} />
+        <div style={getContentStyle(content)} />
       </div>
     </div>
   );

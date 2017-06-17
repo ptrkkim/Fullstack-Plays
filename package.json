@@ -1,7 +1,9 @@
 {
-  "name": "snake.tv",
+  "name": "Fullstack Plays",
   "version": "1.0.0",
-  "description": "slither slither",
+  "description": "FSA Hackathon project. All connected users can interact
+    via chat, and if they type a valid game command, the game state will change.
+    Thus, users can collaboratively make decisions and play games together",
   "main": "index.js",
   "scripts": {
     "start": "webpack & nodemon server",
