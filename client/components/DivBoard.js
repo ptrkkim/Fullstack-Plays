@@ -21,7 +21,7 @@ const Board = ({ grid, size }) => {
 // BOARD IS THE GRID OBJECT, AND ONLY THE GRID OBJECT
   return (
     <div style={boardContainerStyles}>
-      <div id="grid" style={gridStyles}>
+      <div style={gridStyles}>
         {
           grid && Object.values(grid).map((row, rInd) => {
             return (<Row

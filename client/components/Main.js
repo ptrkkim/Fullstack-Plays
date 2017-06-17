@@ -7,6 +7,7 @@ import InputContainer from '../containers/InputContainer';
 import Numbers from '../components/Numbers';
 import Board from '../components/Board';
 import DivBoard from '../components/DivBoard';
+import { Button } from 'react-bootstrap';
 // import GameBoardContainer from '../containers/GameBoard';
 // Component //
 
@@ -15,6 +16,7 @@ const Main = props => {
     <div>
       <h1>stack.tv</h1>
       <Numbers />
+      <Button>CLICK ME PLZ</Button>
       <DivBoard />
       {/* <Board /> */}
       <Messages />
