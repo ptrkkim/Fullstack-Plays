@@ -36,7 +36,8 @@ const ChatInput = ({ handleChange, handleSubmit, inputValue, warning, hasName })
 
   const howToBtnStyles = {
     width: '96.5%',
-    backgroundColor: '#98C1D9'
+    backgroundColor: '#98C1D9',
+    margin: '2px auto'
   };
 
   const popBtnStyles = {
@@ -98,6 +99,10 @@ const ChatInput = ({ handleChange, handleSubmit, inputValue, warning, hasName })
     <div style={formStyles}>
       <form onSubmit={handleSubmit}>
         <FormGroup role="form">
+          {warning && warning !== 'Type something!' && (
+            <HelpBlock>{warning}</HelpBlock>
+          )
+          }
           <FormControl
             style={inputStyles}
             id="chatInput"
@@ -112,10 +117,6 @@ const ChatInput = ({ handleChange, handleSubmit, inputValue, warning, hasName })
             disabled={!!warning || !inputValue}>
             Chat
           </Button>
-          {warning && warning !== 'Type something!' && (
-            <HelpBlock>{warning}</HelpBlock>
-          )
-          }
           <ButtonGroup justified>
             <OverlayTrigger trigger="click" placement="left" overlay={howToPopover}>
               <Button style={howToBtnStyles}>How To Play</Button>
@@ -123,7 +124,7 @@ const ChatInput = ({ handleChange, handleSubmit, inputValue, warning, hasName })
           </ButtonGroup>
           <ButtonGroup justified>
             <OverlayTrigger trigger="click" placement="left" overlay={namePopover}>
-              <Button style={popBtnStyles}>Change Names</Button>
+              <Button style={popBtnStyles}>Rename</Button>
             </OverlayTrigger>
             <OverlayTrigger trigger="click" placement="top" overlay={colorPopover}>
               <Button style={popBtnStyles}>Colors</Button>

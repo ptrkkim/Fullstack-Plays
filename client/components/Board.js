@@ -15,7 +15,7 @@ const Board = ({ grid, size }) => {
   const gridStyles = {
     width: '70vmin',
     height: '70vmin',
-    border: '1px solid #bbb'
+    border: '5px solid #bbb'
   };
 
   return (
