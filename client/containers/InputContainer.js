@@ -42,13 +42,19 @@ class InputContainer extends Component {
 
   handleSubmit (evt) {
     evt.preventDefault();
-    const { name, color, dispatchName } = this.props;
+    const { name, color, dispatchName, dispatchColor } = this.props;
     const text = this.state.inputValue;
-
+    console.log(text);
     if (!name) {
       dispatchName(text);
       return this.setState({ inputValue: '' }); // set name and stop
     }
+
+    if (text.slice(0, 6).toLowerCase() === '/color') {
+      dispatchColor(text.slice(7));
+      return this.setState({ inputValue: ''});
+    }
+
     else if (isCommand(text)) emitCommand(text.toUpperCase());
 
     emitMessage(name, color, text);
@@ -60,7 +66,7 @@ class InputContainer extends Component {
     let warning = '';
 
     if (!inputValue) warning = 'Type something!';
-    else if (inputValue.length > 16) warning = 'Name must be less than 16 characters';
+    else if (!this.props.name && inputValue.length > 16) warning = 'Name must be less than 16 characters';
 
     return (
       <ChatInput

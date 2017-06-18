@@ -17,7 +17,7 @@ const getRandomColor = () => {
   return Object.values(colors)[randColorIndex];
 };
 
-const checkHexCode = code => {
+export const isValidHexCode = code => {
   // some wild regex function, thanks smamatti from stackoverflow..
   return /(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/i.test(code);
 };
@@ -34,7 +34,7 @@ export const setColor = color => {
   if (colors[color]) {
     return ({type: SET_COLOR, color: colors[color] });
   }
-  else if (checkHexCode(color)) {
+  else if (isValidHexCode(color)) {
     return ({type: SET_COLOR, color });
   }
   else {

@@ -13,8 +13,9 @@ const move = (direction) => ({ type: directions[direction] });
 //REDUCER BELOW \\
 const gridSize = 5;
 const gridStructure = Array(gridSize).fill(null).map((el, ind) => ind);
+const startPos = { row: 2, col: 2 };
 const defaultBoard = {
-  playerPos: { row: 2, col: 2},
+  playerPos: startPos,
   grid: {}
 };
 
@@ -27,7 +28,7 @@ gridStructure.forEach(index => {
   });
 });
 
-defaultBoard.grid.row1.col1 = 'player';
+defaultBoard.grid[`row${startPos.row}`][`col${startPos.col}`] = 'player';
 // const gridLooksLike = {
 //   row1: {col1: 'blank', col2: 'blank', col3: 'blank'},
 //   row2: {col1: 'blank', col2: 'blank', col3: 'blank'},

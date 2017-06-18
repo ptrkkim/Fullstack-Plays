@@ -19,7 +19,7 @@ const Sidebar = (props) => {
   };
 
   return (
-    <div style={{backgroundColor: 'whitesmoke', backgroundClip: 'content-box', width: 'inherit'}}>
+    <div style={{backgroundClip: 'content-box', width: 'inherit'}}>
       <div style={msgBackground}>
         <MessagesList />
       </div>
