@@ -20,8 +20,17 @@ const sendBoardStateTo = (userSocket) => {
   else { io.emit('updateBoard', sharedBoard); }
 };
 
-const sendPlayerListTo = (userSocket) => {
-  userSocket.emit('setPlayers', serverStore.getState().players);
+const createNameObject = names => {
+  const nameArray = Object.keys(names).map(key => names[key]);
+  return nameArray.reduce((nameObj, name) => {
+    return Object.assign(nameObj, {[name]: 'taken'});
+  }, {});
+};
+
+const sendPlayerListTo = userOrAll => {
+  const { names, count } = serverStore.getState().players;
+  const nameList = createNameObject(names);
+  userOrAll.emit('setPlayers', {names: nameList, count });
 };
 
 io.on('connection', (userSocket) => {
@@ -42,7 +51,7 @@ io.on('connection', (userSocket) => {
     }
     else { serverStore.dispatch(changeName(userSocket.id, name)); }
 
-    io.emit('setPlayers', serverStore.getState().players);
+    sendPlayerListTo(io);
   });
 
   userSocket.on('command', (command) => {

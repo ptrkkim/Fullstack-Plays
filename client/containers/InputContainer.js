@@ -71,10 +71,17 @@ class InputContainer extends Component {
 
   render () {
     const inputValue = this.state.inputValue;
+    const nameIsTaken = store.getState().players.names[inputValue];
     let warning = '';
 
     if (!inputValue) warning = 'Type something!';
-    else if (!this.props.name && inputValue.length > 16) warning = 'Name must be less than 16 characters';
+    // !this.props.name is TRUE when NO NAME e.g. in picking phase
+    else if (!this.props.name && nameIsTaken) {
+      warning = 'This name is taken!';
+    }
+    else if (!this.props.name && inputValue.length > 16) {
+      warning = 'Name must be less than 16 characters';
+    }
 
     return (
       <ChatInput
