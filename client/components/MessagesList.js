@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 // sender has two props: name and color
-const MessagesList = ({ messages, sender }) => {
+const MessagesList = ({ messages }) => {
 
   // text color #19171c;
   const ulStyles = {
@@ -18,12 +18,17 @@ const MessagesList = ({ messages, sender }) => {
       <ul id="messages" style={ulStyles}>
         {
           messages.map((message, i) => {
-            const shaded = i % 2 === 1 ? '#eee' : 'fff';
-            const style = Object.assign({}, liStyles, {background: shaded});
+            const nameStyle = {
+              fontWeight: 600,
+              color: message.color
+            };
 
             return (
-              <li style={style} key={i}>
-                {`${message.sender}: ${message.text}`}
+              <li style={liStyles} key={i}>
+                {/* `${message.sender}: ${message.text}`*/}
+                <span style={nameStyle}>{`${message.sender}`}</span>
+                <span>: </span>
+                <span>{`${message.text}`}</span>
               </li>
             );
         })
@@ -33,10 +38,17 @@ const MessagesList = ({ messages, sender }) => {
   );
 };
 
-const mapState = ({ messages, sender }) => {
-  return { messages, sender };
+const mapState = ({ messages }) => {
+  return { messages };
 };
 
 export default connect(mapState)(MessagesList);
 // later: calculate li height * number of messages
 // .animate scrolltop: height
+
+
+// return (
+// <span style={nameStyle}>{`${message.sender}`}</span>
+// <span>:</span>
+// <span>{`${message.text}`}</span>
+// )

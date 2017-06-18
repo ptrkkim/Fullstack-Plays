@@ -1,16 +1,15 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import Messages from './Messages';
+import MessagesList from './MessagesList';
 import InputContainer from '../containers/InputContainer';
 
 const Sidebar = (props) => {
-  const ulStyles = {
-    listStyleType: 'none'
-  };
+  // const ulStyles = {
+  //   listStyleType: 'none'
+  // };
 
-  const liStyles = {
-    padding: '5px 10px'
-  };
+  // const liStyles = {
+  //   padding: '5px 10px'
+  // };
 
   return (
     <div>
@@ -20,10 +19,4 @@ const Sidebar = (props) => {
   );
 };
 
-const mapState = ({ Sidebar }) => {
-  return { Sidebar };
-};
-
-export default connect(mapState)(Sidebar);
-// later: calculate li height * number of Sidebar
-// .animate scrolltop: height
+export default Sidebar;

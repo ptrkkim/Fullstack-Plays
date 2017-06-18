@@ -1,8 +1,7 @@
 import React from 'react';
 import { Button, FormGroup, FormControl } from 'react-bootstrap';
 
-const ChatInput = ({ handleChange, handleSubmit, inputValue, warning }) => {
-
+const ChatInput = ({ handleChange, handleSubmit, inputValue, warning, hasName }) => {
   const formStyles = {
       background: `#000`,
       padding: `3px`,
@@ -26,7 +25,7 @@ const ChatInput = ({ handleChange, handleSubmit, inputValue, warning }) => {
     background: `rgb(130, 224, 255)`
   };
 
-
+  const placeholder = hasName ? 'Send a message...' : 'Pick a name!';
   return (
     <div style={formStyles}>
       <form onSubmit={handleSubmit}>
@@ -34,12 +33,17 @@ const ChatInput = ({ handleChange, handleSubmit, inputValue, warning }) => {
           <FormControl
             style={inputStyles}
             id="chatInput"
-            placeholder="Send a message..."
+            placeholder={placeholder}
             type="text"
             onChange={handleChange}
             value={inputValue}
           />
-          <Button style={buttonStyles} type="submit">Chat</Button>
+          <Button
+            style={buttonStyles}
+            type="submit"
+            disabled={!!warning || !inputValue}>
+            Chat
+          </Button>
         </FormGroup>
       </form>
     </div>

@@ -1,9 +1,27 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import ChatInput from '../components/ChatInput';
 import { clientSocket } from '../clientSocket';
 
-class InputContainer extends Component {
+const isCommand = text => {
+  const commands = {
+    UP: 'UP',
+    DOWN: 'DOWN',
+    LEFT: 'LEFT',
+    RIGHT: 'RIGHT'
+  };
+  return commands[text.toUpperCase()];
+};
 
+const emitCommand = commandToSend => {
+  clientSocket.emit('command', commandToSend);
+};
+
+const emitMessage = (name, color, text) => {
+  clientSocket.emit('newMsg', { sender: name, color, text });
+};
+
+class InputContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -23,29 +41,16 @@ class InputContainer extends Component {
 
   handleSubmit (evt) {
     evt.preventDefault();
-    if (!this.state.inputValue.length) return;
-
+    const { name, color, setName } = this.props;
     const text = this.state.inputValue;
-    const commands = {
-      UP: 'UP',
-      DOWN: 'DOWN',
-      LEFT: 'LEFT',
-      RIGHT: 'RIGHT'
-    };
 
-    // emits a command if input is a valid game command
-    const commandToSend = text.toUpperCase();
-    if (commands[commandToSend]) {
-      clientSocket.emit('command', commandToSend);
+    if (!name) {
+      setName(text);
+      return this.setState({ inputValue: '' }); // set name and stop
     }
+    else if (isCommand(text)) emitCommand(text.toUpperCase());
 
-    // messaging logic, always happens
-    // sender should eventually be received from state.name
-    clientSocket.emit('newMsg', {
-      sender: 'stackBot',
-      text
-    });
-
+    emitMessage(name, color, text);
     this.setState({ inputValue: '' });
   }
 
@@ -54,16 +59,23 @@ class InputContainer extends Component {
     let warning = '';
 
     if (!inputValue) warning = 'Type something!';
+    else if (inputValue.length > 16) warning = 'Name must be less than 16 characters';
 
     return (
       <ChatInput
         handleChange={this.handleChange}
         handleSubmit={this.handleSubmit}
         inputValue={inputValue}
+        hasName={!!this.props.name}
         warning={warning}
       />
     );
   }
 }
 
-export default InputContainer;
+const mapState = ({ sender }) => ({
+  name: sender.name,
+  color: sender.color
+});
+
+export default connect(mapState)(InputContainer);

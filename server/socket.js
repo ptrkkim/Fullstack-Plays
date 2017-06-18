@@ -17,25 +17,12 @@ const sendBoardStateTo = (userSocket) => {
   else { io.emit('updateBoard', sharedBoard); }
 };
 
-// things to do when user connects
 io.on('connection', (userSocket) => {
+  // things to do when user connects
   console.log(userSocket.id, 'a user connected');
-
-  // will send current game state on load
-  // FUTURE:
-  // depending on how fast this is, may need to use lifecycle hook
-  // componentDidMount or componentWillMount to request game state
-  // upon clientside gameBoard loading, emit 'request current state'
-  // send back the current state, regardless of tick.
-
-  // sendNumberStateTo(userSocket);
   sendBoardStateTo(userSocket);
 
-  userSocket.broadcast.emit('receiveMsg', {
-      sender: 'server',
-      text: `${userSocket.id} has joined.`
-    });
-
+  // listeners
   userSocket.on('newMsg', (message) => {
     io.emit('receiveMsg', message);
   });

@@ -1,20 +1,16 @@
 // ACTIONS BELOW \\
-
 const directions = {
   UP: 'UP',
   DOWN: 'DOWN',
   LEFT: 'LEFT',
   RIGHT: 'RIGHT'
 };
-
 const { UP, DOWN, LEFT, RIGHT } = directions;
 
 // ACTION CREATORS BELOW \\
-
 const move = (direction) => ({ type: directions[direction] });
 
 //REDUCER BELOW \\
-
 const gridSize = 5;
 const gridStructure = Array(gridSize).fill(null).map((el, ind) => ind);
 const defaultBoard = {
@@ -79,12 +75,6 @@ function moveUpAndDown(oldGrid, playerPos, upOrDown) {
     playerPos: newPos,
     grid: Object.assign(oldGrid, updatedRows) // a full grid with two updated rows
   };
-
-  // return Object.assign(
-  //   oldGrid,
-  //   {playerPos: newPos},
-  //   updatedRows
-  // );
 }
 
 function moveLeftAndRight (oldGrid, playerPos, leftOrRight) {
@@ -110,12 +100,6 @@ function moveLeftAndRight (oldGrid, playerPos, leftOrRight) {
     playerPos: newPos,
     grid: Object.assign(oldGrid, updatedRow)
   };
-
-  // return Object.assign(
-  //   oldGrid,
-  //   {playerPos: newPos},
-  //   {[oldRowInd]: Object.assign(oldGrid[oldRowInd], updatedColumns)}
-  // );
 }
 
 function getOldPositionInfo (playerPos) {
