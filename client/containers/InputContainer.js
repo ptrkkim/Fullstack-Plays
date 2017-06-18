@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import ChatInput from '../components/ChatInput';
 import { clientSocket } from '../clientSocket';
 import { setName, setColor } from '../reducer/sender';
+import store from '../store';
 
 const isCommand = text => {
   const commands = {
@@ -20,6 +21,10 @@ const emitCommand = commandToSend => {
 
 const emitMessage = (name, color, text) => {
   clientSocket.emit('newMsg', { sender: name, color, text });
+};
+
+const emitPickName = name => {
+  clientSocket.emit('pickName', name);
 };
 
 class InputContainer extends Component {
@@ -44,9 +49,12 @@ class InputContainer extends Component {
     evt.preventDefault();
     const { name, color, dispatchName, dispatchColor } = this.props;
     const text = this.state.inputValue;
-    console.log(text);
+
+    // should i assume name has already been validated?
     if (!name) {
       dispatchName(text);
+      // console.log(store.getState().sender.name);
+      emitPickName(store.getState().sender.name);
       return this.setState({ inputValue: '' }); // set name and stop
     }
 

@@ -29,6 +29,7 @@ io.on('connection', (userSocket) => {
   console.log(userSocket.id, 'a user connected');
   sendBoardStateTo(userSocket);
   sendPlayerListTo(userSocket);
+
   // listeners e.g. if user emits newMsg...
   userSocket.on('newMsg', (message) => {
     io.emit('receiveMsg', message);
@@ -46,12 +47,14 @@ io.on('connection', (userSocket) => {
 
   userSocket.on('command', (command) => {
     serverStore.dispatch(move(command)); // e.g. { type: 'LEFT' }
-    // serverStore.dispatch(increment());
   });
 
   userSocket.on('disconnect', () => {
     console.log(userSocket.id, 'disconnected');
-    serverStore.dispatch(removePlayer(userSocket));
+    if (serverStore.getState().players.names[userSocket.id]) {
+      serverStore.dispatch(removePlayer(userSocket.id));
+      io.emit('setPlayers', serverStore.getState().players);
+    }
   });
 
 });

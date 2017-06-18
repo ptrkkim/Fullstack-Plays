@@ -1,43 +1,34 @@
-
 // assumes name has already been validated client-side
 // initially all names are valid
 // after first name, all users now have the first name in their FE state
 // should therefore be unable to select that name (chat disabled, warning)
 
-// once validated, sends the picked name to server
-// userSocket.on('pickName', (name) => {
-//   serverStore.dispatch(pickName(userSocket.id, name));
-//   // dispatch socket id, name
-// });
-
+// ACTIONS \\
 const ADD_PLAYER = 'ADD_PLAYER';
 const REMOVE_PLAYER = 'REMOVE_PLAYER';
 const CHANGE_NAME = 'CHANGE_NAME';
 
+// ACTION CREATORS \\
 const defaultPlayers = {
   names: {},
   count: 0
 };
 
-const addPlayer = (userSocket, name) => ({
+const addPlayer = (id, name) => ({
   type: ADD_PLAYER,
-  id: userSocket.id,
+  id,
   name
 });
 
-const changeName = (userSocket, name) => ({
+const changeName = (id, name) => ({
   type: CHANGE_NAME,
-  id: userSocket.id,
+  id,
   name
 });
 
-const removePlayer = (userSocket) => ({
-  type: REMOVE_PLAYER,
-  id: userSocket.id
-});
-// export const addPlayer = name => ({ type: ADD_PLAYER, name });
-// export const removePlayer = name => ({ type: REMOVE_PLAYER, name });
+const removePlayer = (id) => ({ type: REMOVE_PLAYER, id });
 
+// REDUCER \\
 const playersReducer = (state = defaultPlayers, action) => {
   switch (action.type) {
     case ADD_PLAYER: {
