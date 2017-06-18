@@ -6,7 +6,8 @@ const MessagesList = ({ messages }) => {
 
   // text color #19171c;
   const ulStyles = {
-    listStyleType: 'none'
+    listStyleType: 'none',
+    padding: '0px'
   };
 
   const liStyles = {

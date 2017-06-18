@@ -10,10 +10,17 @@ const Sidebar = (props) => {
   // const liStyles = {
   //   padding: '5px 10px'
   // };
+  const msgBackground = {
+    width: '300%',
+    backgroundColor: 'whitesmoke',
+    marginTop: '10px',
+    borderRadius: '5px',
+    height: '90vh'
+  };
 
   return (
-    <div style={{width: 'inherit'}}>
-      <div style={{width: '300%'}}>
+    <div style={{backgroundColor: 'whitesmoke', backgroundClip: 'content-box', width: 'inherit'}}>
+      <div style={msgBackground}>
         <MessagesList />
       </div>
       <div style={{width: 'inherit'}}>

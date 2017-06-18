@@ -3,8 +3,8 @@ import { Button, FormGroup, FormControl } from 'react-bootstrap';
 
 const ChatInput = ({ handleChange, handleSubmit, inputValue, warning, hasName }) => {
   const formStyles = {
-      background: `#000`,
-      padding: `3px`,
+      background: `#dbdee3`,
+      padding: `0 17.5px 0 0`,
       position: `fixed`,
       bottom: 0,
       width: `inherit`

@@ -1,7 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Link } from 'react-router';
 // import Messages from './Messages';
 // import InputContainer from '../containers/InputContainer';
 import Sidebar from './Sidebar';
@@ -10,16 +8,23 @@ import Sidebar from './Sidebar';
 import Board from '../components/Board';
 import { Col } from 'react-bootstrap';
 
+const sideColStyles = {
+  backgroundColor: '#dbdee3',
+  height: '100vh'
+};
+
 const Main = props => {
   return (
     <div>
-      <h1>Fullstack Plays</h1>
       <Col xs={12} md={8}>
+        <h2>Fullstack Plays</h2>
         <Board />
       </Col>
-      <Col xs={12} md={4}>
-        <Sidebar />
-      </Col>
+      <div >
+        <Col style={sideColStyles} xs={12} md={4}>
+          <Sidebar />
+        </Col>
+      </div>
     </div>
   );
 };
@@ -31,8 +36,7 @@ const mapState = ({ team }) => ({
   team
 });
 
-// const mapDispatch = dispatch => ({
-// });
+// sidebarcol: find a height, background-color: whitesmoke, background-clip content-box
 
 export default connect(mapState)(Main);
 
