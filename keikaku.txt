@@ -1,160 +1,21 @@
-// Chat app
-//   Pick a name (on state) (on input?)
-//   Auto scroll
-
-//   Commands tooltip
-//   NameColor picker
-//   low prio: Emoji picker
-
-`
-Grid
-
-  simply an array of strings
-
-  socket listener to receive grid
-  clientSocket.on('updateGrid')...
-    store.dispatch(setGrid)
-
-    entire grid is now on state 
-    can pass to grid components
-
-    can also send grid from server on connection
-
-  setInterval emitter?
-    can access a global grid 
-    on tick, io.emit('updateGrid') with current grid
-
-  clientSocket.emit('up', 'down', 'left', 'right')
-    can emit conditionally after checking grid conditions
-    OR let the emits happen, check validity serverside
-
-  io.on('up, 'down', 'left', 'right')
-    updates global grid with array math
-
-Grid components
-  
-  if state.grid is simply an array of strings
-    can map over grid, conditionally rendering content tiles
-      pass string to content tile
-      content tile can switch statement to display correct tile type
-
-More advanced/efficient usage of react/redux?
-  if state.grid was an object 
-  grid { cell1: 'geoff', cell2: 'blank', cell3: 'blank'}
-    io.emit('changedCells') with object of updated key/value pairs
-      e.g. {cell1: 'blank', cell2: 'geoff'} <- 'right' movement
-
-    clientSocket.on('changedCells')
-      dispatch(updateCells([cellsToUpdate]))
-
-      in reducer...
-        newGrid = Object.assign({}, oldGrid, action.updatedCells)
-
-  row implementation?
-    grid = { 
-      row1: {col1: 'blank', col2: 'geoff', col3: 'blank'},
-      row2: {col1, 'blank', col2: 'blank', col3: 'blank'},
-      row3: {col1, 'blank', col2: 'blank', col3: 'blank'}
-    }
-
-    geoffPos: {col: 0, row: 0}
-    user types right
-      emits command with 'right'
-
-    io.emit('changedCells') with object {row: cell2: }
-    clientSocket.on('changedCells')
-
 `
 
-// Game
-//   Grid system 01 02 03 04 05 06 07 08 09 10
-//               11 12 13 14 15 16 17 18 19 20
-//               21 22 23 24 25 26 27 28 29 30
-//               31 32 33 34 35 36 37 38 39 40
-//               41 42 43 44 45 46 47 48 49 50
-//               51 52 53 54 55 56 57 58 59 60
-//               61 62 63 64 65 66 67 68 69 70
-//               71 72 73 74 75 76 77 78 79 80
-//               81 82 83 84 85 86 87 88 89 90
-//               91 92 93 94 95 96 97 98 99 100
+Major features left to implement before end of stackathon:
+  1. Messages overflow and scroll when new messages arrive
+  2. Accumulate inputs over a time period
 
-// right -> return grid.rows.map.(row => {
-//   if (row.includes('geoff') return moveRight(row);)
-//   return row;
-// })
+  4. MAKE A DAMN GAME LMAO
+  3. Display Player count
 
-// function moveRight (arr) {
-//   const newArr = arr.slice();
-//   const geoffIndex = newArr.find('geoff');
-//   if (geoffIndex < newArr.length - 1) {
-//     newArr[geoffIndex] = 'blank';
-//     newArr[geoffIndex + 1] = 'geoff';
-//   }
 
-//   return newArr;
-// }
 
-// defaultGrid = {
-//   rows: [[firstRow], [secondRow], [thirdRow]],
-//   geoffY: rows.length - 1;
-// }
 
-// up -> return grid.map((row, i) => {
 
-// })
 
-// export default function (state = defaultGrid, action) {
-//   const newState = Object.assign({}, state);
 
-//   switch (action.direction) {
-//     case 'up':
-//       if (state.geoffY > 0) {
 
-//       }
-//       return;
-//     default:
-//       return state;
-//   }
-// }
 
-// export const array = (state = defaultGrid, action) => {
-//   const newGrid = state.rows.map(row => row.slice());
-//   const { geoffY, geoffX } = Object.assign({}, state.geoffPos};
 
-//   switch (action.direction) {
-//     case 'up':
-//       const newY = geoffY + 1;
-//       newGrid[geoffY[geoffX]] = 'blank';
-//       newGrid[newY[geoffX]] = 'geoff';
-//       return;
-//     default:
-//       return state;
-//   }
-// }
-// 'blank'
-// 'geoff'
-// 'spear'
-// 'dan'
 
-let grid = [[row1], [row2], [row3]];
-let geoffPos = {x: 0, y: 0}
 
-setInterval()
-[[blank, blank, blank], [blank, geoff, blank], [blank, blank, blank]]
-
-Grid
-  {state.grid.(row => {
-    return <Row id={`row${i}`} cells={row.}
-  })}
-
-state.grid: [row0, row1, row2]
-
-row.cells: [cell0, cell1, cell2]
-
-<Grid />
-  <Row />
-  within grid:
-  <Cell />
-  within Cell
-    <CellContent />
-
+`

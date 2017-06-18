@@ -13,11 +13,21 @@ const sideColStyles = {
   height: '100vh'
 };
 
-const Main = props => {
+const Main = ({ count, name }) => {
   return (
     <div>
       <Col xs={12} md={8}>
         <h2>Fullstack Plays</h2>
+        <h5>{
+          count === 1
+            ? `There is only one, very lonely player.`
+            : `There are ${count} players.`
+        }</h5>
+        {
+          !name
+          ? <h5>Pick a name and join them!</h5>
+          : null
+        }
         <Board />
       </Col>
       <div >
@@ -32,8 +42,9 @@ const Main = props => {
 Main.propTypes = {
 };
 
-const mapState = ({ team }) => ({
-  team
+const mapState = ({ players, sender }) => ({
+  count: players.count,
+  name: sender.name
 });
 
 // sidebarcol: find a height, background-color: whitesmoke, background-clip content-box
