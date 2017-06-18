@@ -2,6 +2,9 @@ const server = require('./app');
 const socketio = require('socket.io');
 // const increment = require('./serverReducer/number').incrementNumber;
 const move = require('./serverReducer/gameBoard').move;
+const addPlayer = require('./serverReducer/players').addPlayer;
+const changeName = require('./serverReducer/players').changeName;
+const removePlayer = require('./serverReducer/players').removePlayer;
 const io = socketio(server);
 const serverStore = require('./serverStore');
 
@@ -17,14 +20,28 @@ const sendBoardStateTo = (userSocket) => {
   else { io.emit('updateBoard', sharedBoard); }
 };
 
+const sendPlayerListTo = (userSocket) => {
+  userSocket.emit('setPlayers', serverStore.getState().players);
+};
+
 io.on('connection', (userSocket) => {
   // things to do when user connects
   console.log(userSocket.id, 'a user connected');
   sendBoardStateTo(userSocket);
-
+  sendPlayerListTo(userSocket);
   // listeners e.g. if user emits newMsg...
   userSocket.on('newMsg', (message) => {
     io.emit('receiveMsg', message);
+  });
+
+  userSocket.on('pickName', (name) => {
+    // if this socket id has no name
+    if (!serverStore.getState().players.names[userSocket.id]) {
+      serverStore.dispatch(addPlayer(userSocket.id, name));
+    }
+    else {
+      serverStore.dispatch(changeName(userSocket.id, name));
+    }
   });
 
   userSocket.on('command', (command) => {
@@ -34,6 +51,7 @@ io.on('connection', (userSocket) => {
 
   userSocket.on('disconnect', () => {
     console.log(userSocket.id, 'disconnected');
+    serverStore.dispatch(removePlayer)
   });
 
 });
