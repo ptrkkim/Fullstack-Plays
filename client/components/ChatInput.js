@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, FormGroup, FormControl } from 'react-bootstrap';
+import { Button, FormGroup, FormControl, HelpBlock } from 'react-bootstrap';
 
 const ChatInput = ({ handleChange, handleSubmit, inputValue, warning, hasName }) => {
   const formStyles = {
@@ -44,6 +44,10 @@ const ChatInput = ({ handleChange, handleSubmit, inputValue, warning, hasName })
             disabled={!!warning || !inputValue}>
             Chat
           </Button>
+          {warning && warning !== 'Type something!' && (
+            <HelpBlock>{warning}</HelpBlock>
+          )
+          }
         </FormGroup>
       </form>
     </div>

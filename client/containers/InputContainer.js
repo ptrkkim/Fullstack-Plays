@@ -27,6 +27,11 @@ const emitPickName = name => {
   clientSocket.emit('pickName', name);
 };
 
+const nameIsTaken = name => {
+  const namesArray = Object.keys(store.getState().players.names);
+  return namesArray.find(nameKey => nameKey.toLowerCase() === name.toLowerCase());
+};
+
 class InputContainer extends Component {
   constructor(props) {
     super(props);
@@ -71,12 +76,11 @@ class InputContainer extends Component {
 
   render () {
     const inputValue = this.state.inputValue;
-    const nameIsTaken = store.getState().players.names[inputValue];
     let warning = '';
 
     if (!inputValue) warning = 'Type something!';
     // !this.props.name is TRUE when NO NAME e.g. in picking phase
-    else if (!this.props.name && nameIsTaken) {
+    else if (!this.props.name && nameIsTaken(inputValue)) {
       warning = 'This name is taken!';
     }
     else if (!this.props.name && inputValue.length > 16) {
