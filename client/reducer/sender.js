@@ -11,25 +11,31 @@ const colors = {
   purple: '#8A2BE2',
   pink: '#FF69B4'
 };
-const randomColorIndex = Math.floor(Math.random() * 6);
-const randomDefaultColor = Object.values(colors)[randomColorIndex];
-const defaultSender = {
-  name: '',
-  colorCode: randomDefaultColor
+
+const getRandomColor = () => {
+  const randColorIndex = Math.floor(Math.random() * 6);
+  return Object.values(colors)[randColorIndex];
 };
+
 const checkHexCode = code => {
   // some wild regex function, thanks smamatti from stackoverflow..
   return /(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/i.test(code);
 };
 
+const defaultSender = {
+  name: '',
+  color: ''
+};
+
+
 // ACTION CREATORS BELOW \\
 export const setName = name => ({type: SET_NAME, name });
 export const setColor = color => {
   if (colors[color]) {
-    return ({type: SET_COLOR, colorCode: colors[color] });
+    return ({type: SET_COLOR, color: colors[color] });
   }
   else if (checkHexCode(color)) {
-    return ({type: SET_COLOR, colorCode: color });
+    return ({type: SET_COLOR, color });
   }
   else {
     return ({ type: DO_NOTHING });
@@ -40,9 +46,12 @@ export const setColor = color => {
 export default function (state = defaultSender, action) {
   switch (action.type) {
     case SET_NAME:
-      return Object.assign({}, state, { name: action.name });
+      return Object.assign({}, state, {
+        name: action.name,
+        color: getRandomColor()
+      });
     case SET_COLOR:
-      return Object.assign({}, state, { colorCode: action.colorCode});
+      return Object.assign({}, state, { color: action.color});
     default:
       return state;
   }

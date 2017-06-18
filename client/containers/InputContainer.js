@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import ChatInput from '../components/ChatInput';
 import { clientSocket } from '../clientSocket';
+import { setName, setColor } from '../reducer/sender';
 
 const isCommand = text => {
   const commands = {
@@ -41,11 +42,11 @@ class InputContainer extends Component {
 
   handleSubmit (evt) {
     evt.preventDefault();
-    const { name, color, setName } = this.props;
+    const { name, color, dispatchName } = this.props;
     const text = this.state.inputValue;
 
     if (!name) {
-      setName(text);
+      dispatchName(text);
       return this.setState({ inputValue: '' }); // set name and stop
     }
     else if (isCommand(text)) emitCommand(text.toUpperCase());
@@ -78,4 +79,11 @@ const mapState = ({ sender }) => ({
   color: sender.color
 });
 
-export default connect(mapState)(InputContainer);
+const mapDispatch = dispatch => {
+  return {
+    dispatchName (name) { dispatch(setName(name)); },
+    dispatchColor (color) { dispatch(setColor(color)); }
+  };
+};
+
+export default connect(mapState, mapDispatch)(InputContainer);

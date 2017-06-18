@@ -22,7 +22,7 @@ io.on('connection', (userSocket) => {
   console.log(userSocket.id, 'a user connected');
   sendBoardStateTo(userSocket);
 
-  // listeners
+  // listeners e.g. if user emits newMsg...
   userSocket.on('newMsg', (message) => {
     io.emit('receiveMsg', message);
   });

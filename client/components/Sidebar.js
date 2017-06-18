@@ -12,9 +12,13 @@ const Sidebar = (props) => {
   // };
 
   return (
-    <div>
-      <MessagesList />
-      <InputContainer />
+    <div style={{width: 'inherit'}}>
+      <div style={{width: '300%'}}>
+        <MessagesList />
+      </div>
+      <div style={{width: 'inherit'}}>
+        <InputContainer />
+      </div>
     </div>
   );
 };

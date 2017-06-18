@@ -48,25 +48,6 @@ const ChatInput = ({ handleChange, handleSubmit, inputValue, warning, hasName })
       </form>
     </div>
   );
-/*
-  return (
-    <div style={formStyles}>
-      <form onSubmit={handleSubmit}>
-        <fieldset>
-          <input
-            style={inputStyles}
-            id="chatInput"
-            type="text"
-            placeholder="Send a message..."
-            onChange={handleChange}
-            value={inputValue}
-          />
-          <Button style={buttonStyles} type="submit">Chat</Button>
-        </fieldset>
-      </form>
-    </div>
-  );
-*/
 };
 
 export default ChatInput;

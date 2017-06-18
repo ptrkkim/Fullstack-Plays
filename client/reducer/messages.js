@@ -5,7 +5,7 @@ const ADD_MESSAGE = 'ADD_MESSAGE';
 const defaultMessages = [{
   sender: 'StackBot',
   color: '#000000',
-  message: 'Welcome to the server! Pick a name and start chatting!'
+  text: 'Welcome to the server! Pick a name and start chatting!'
 }];
 
 export const addMessage = message => ({type: ADD_MESSAGE, message });
