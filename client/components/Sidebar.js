@@ -14,7 +14,7 @@ const Sidebar = (props) => {
     backgroundColor: 'whitesmoke',
     marginTop: '10px',
     borderRadius: '5px',
-    height: '90vh'
+    height: '81vh'
   };
 
   return (

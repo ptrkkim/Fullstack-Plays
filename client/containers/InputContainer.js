@@ -55,12 +55,16 @@ class InputContainer extends Component {
     const { name, color, dispatchName, dispatchColor } = this.props;
     const text = this.state.inputValue;
 
-    // should i assume name has already been validated?
+    // assumes that submit is disabled for taken names
     if (!name) {
       dispatchName(text);
-      // console.log(store.getState().sender.name);
       emitPickName(store.getState().sender.name);
       return this.setState({ inputValue: '' }); // set name and stop
+    }
+
+    if (text === '/rename') {
+      dispatchName('');
+      return this.setState({ inputValue: '' });
     }
 
     if (text.slice(0, 6).toLowerCase() === '/color') {

@@ -6,6 +6,7 @@ const DO_NOTHING = 'DO_NOTHING';
 const colors = {
   red: '#FF0000',
   orange: '#FF7F50',
+  yellow: '#d8d856',
   blue: '#0000FF',
   green: '#008000',
   purple: '#8A2BE2',
@@ -13,7 +14,7 @@ const colors = {
 };
 
 const getRandomColor = () => {
-  const randColorIndex = Math.floor(Math.random() * 6);
+  const randColorIndex = Math.floor(Math.random() * 7);
   return Object.values(colors)[randColorIndex];
 };
 
@@ -38,7 +39,7 @@ export const setColor = color => {
     return ({type: SET_COLOR, color });
   }
   else {
-    return ({ type: DO_NOTHING });
+    return ({type: DO_NOTHING });
   }
 };
 
