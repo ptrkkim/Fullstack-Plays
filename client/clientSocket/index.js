@@ -3,6 +3,7 @@ import store from '../store';
 import io from 'socket.io-client';
 import { newNumber } from '../reducer/number';
 import { setBoard } from '../reducer/board';
+import { setPlayers } from '../reducer/players';
 
 // set up listeners for server signals
 export const clientSocket = io(window.location.host /*, { reconnect: true } */);
@@ -15,6 +16,10 @@ export const clientSocket = io(window.location.host /*, { reconnect: true } */);
   clientSocket.on('receiveMsg', (message) => {
     store.dispatch(addMessage(message));
   });
+
+  clientSocket.on('setPlayers', (players) => {
+    store.dispatch():
+  })
 
   // in test case, storeState is simply an integer
   clientSocket.on('updateNumber', (serverStoreState) => {

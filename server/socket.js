@@ -39,9 +39,9 @@ io.on('connection', (userSocket) => {
     if (!serverStore.getState().players.names[userSocket.id]) {
       serverStore.dispatch(addPlayer(userSocket.id, name));
     }
-    else {
-      serverStore.dispatch(changeName(userSocket.id, name));
-    }
+    else { serverStore.dispatch(changeName(userSocket.id, name)); }
+
+    io.emit('setPlayers', serverStore.getState().players);
   });
 
   userSocket.on('command', (command) => {
@@ -51,7 +51,7 @@ io.on('connection', (userSocket) => {
 
   userSocket.on('disconnect', () => {
     console.log(userSocket.id, 'disconnected');
-    serverStore.dispatch(removePlayer)
+    serverStore.dispatch(removePlayer(userSocket));
   });
 
 });
