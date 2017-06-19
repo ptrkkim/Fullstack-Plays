@@ -75,7 +75,7 @@ const ChatInput = ({ handleChange, handleSubmit, inputValue, warning, hasName })
       purple<br />
       pink<br /> <br />
       <strong>Advanced:</strong><br />
-      All valid hex codes will work! e.g. <strong>/color #0000FF</strong>
+      All valid hex codes will work!<br />example: <strong>/color #0000FF</strong>
     </Popover>
   );
 

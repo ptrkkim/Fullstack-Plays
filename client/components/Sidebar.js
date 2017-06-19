@@ -1,26 +1,20 @@
 import React from 'react';
-import MessagesList from './MessagesList';
+import MessagesContainer from '../containers/MessagesContainer';
 import InputContainer from '../containers/InputContainer';
 
 const Sidebar = (props) => {
-  // const ulStyles = {
-  //   listStyleType: 'none'
-  // };
-
-  // const liStyles = {
-  //   padding: '5px 10px'
-  // };
   const msgBackground = {
     backgroundColor: 'whitesmoke',
     marginTop: '10px',
     borderRadius: '5px',
-    height: '81vh'
+    height: '81vh',
+    overflowY: 'scroll'
   };
 
   return (
     <div style={{backgroundClip: 'content-box', width: 'inherit'}}>
       <div id="msgBg" style={msgBackground}>
-        <MessagesList />
+        <MessagesContainer />
       </div>
       <div style={{width: 'inherit'}}>
         <InputContainer />
