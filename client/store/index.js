@@ -1,12 +1,7 @@
-import { createStore, applyMiddleware } from 'redux';
-import createLogger from 'redux-logger';
-import thunkMiddleware from 'redux-thunk';
+import { createStore } from 'redux';
+
 import reducer from '../reducer';
 
 export default createStore(
-  reducer,
-  applyMiddleware(
-    thunkMiddleware,
-    createLogger({ collapsed: true })
-  )
+  reducer
 );
