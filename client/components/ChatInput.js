@@ -50,7 +50,9 @@ const ChatInput = ({ handleChange, handleSubmit, inputValue, warning, hasName })
     <Popover id="instructionPop" title="Instructions">
       Type <strong>up</strong>, <strong>down</strong>, <strong>left</strong>, or <strong>right</strong> to pick up and learn technologies.
       <br /> <br />
-      Work together to learn full stack web development!
+      Work together to learn full stack web development before time runs out!
+      <br /> <br />
+      Start the game and timer by typing <strong>/start</strong>
     </Popover>
   );
 

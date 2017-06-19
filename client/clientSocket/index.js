@@ -28,6 +28,7 @@ export const clientSocket = io(window.location.host /*, { reconnect: true } */);
   clientSocket.on('failure', () => {
     store.dispatch(failure());
   });
+
   // in test case, storeState is simply an integer
   clientSocket.on('gameStatus', (serverGameStatus) => {
     store.dispatch(updateStatus(serverGameStatus));

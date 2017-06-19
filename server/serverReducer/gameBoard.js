@@ -8,6 +8,7 @@ const directions = {
 const { UP, DOWN, LEFT, RIGHT } = directions;
 const DO_NOTHING = 'DO_NOTHING';
 const RESET = 'RESET';
+const CLEAR = 'CLEAR';
 
 // ACTION CREATORS BELOW \\
 const move = direction => {
@@ -18,6 +19,10 @@ const move = direction => {
 
 const resetBoard = () => {
   return {type: RESET};
+};
+
+const clearBoard = () => {
+  return {type: CLEAR};
 };
 
 //REDUCER BELOW \\
@@ -62,11 +67,29 @@ const seedBoard = () => {
   seededBoard.grid[`row1`][`col0`] = 'react';
   seededBoard.grid[`row2`][`col2`] = 'node';
   seededBoard.grid[`row6`][`col3`] = 'css';
-  seededBoard.grid[`row4`][`col4`] = 'data';
+  seededBoard.grid[`row4`][`col4`] = 'io';
   seededBoard.grid[`row5`][`col1`] = 'redux';
   seededBoard.grid[`row6`][`col6`] = 'html';
   seededBoard.grid[`row0`][`col3`] = 'sql';
   return seededBoard;
+};
+
+const clearedBoard = () => {
+  const emptyBoard = {
+    playerPos: startPos,
+    grid: {}
+  };
+
+  gridStructure.forEach(index => {
+    const rowInd = `row${index}`;
+    emptyBoard.grid[rowInd] = {};
+    gridStructure.forEach(ind => {
+      const colInd = `col${ind}`;
+      emptyBoard.grid[rowInd][colInd] = 'blank';
+    });
+  });
+
+  return emptyBoard;
 };
 // const gridLooksLike = {
 //   row1: {col1: 'blank', col2: 'blank', col3: 'blank'},
@@ -81,6 +104,8 @@ const seedBoard = () => {
 const boardReducer = (state = defaultBoard, action) => {
   const { playerPos, grid } = state;
   switch (action.type) {
+    case CLEAR:
+      return clearedBoard();
     case RESET:
       return seedBoard();
     case LEFT:
@@ -156,5 +181,6 @@ function getOldPositionInfo (playerPos) {
 module.exports = {
   move,
   resetBoard,
+  clearBoard,
   boardReducer
 };

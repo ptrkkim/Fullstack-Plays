@@ -3,6 +3,7 @@ const socketio = require('socket.io');
 // const increment = require('./serverReducer/number').incrementNumber;
 const move = require('./serverReducer/gameBoard').move;
 const resetBoard = require('./serverReducer/gameBoard').resetBoard;
+const clearBoard = require('./serverReducer/gameBoard').clearBoard;
 const addCommand = require('./serverReducer/commandAccumulator').addCommand;
 const clearCommands = require('./serverReducer/commandAccumulator').clearCommands;
 const addPlayer = require('./serverReducer/players').addPlayer;
@@ -13,7 +14,7 @@ const decrementTime = require('./serverReducer/gameStatus').decrementTime;
 const stopAndResetGame = require('./serverReducer/gameStatus').stopAndResetGame;
 const io = socketio(server);
 const serverStore = require('./serverStore');
-const SECONDS = 45;
+const SECONDS = 30;
 
 
 const sendBoardStateTo = (userSocket) => {
@@ -97,11 +98,15 @@ const tickGameState = (tickingInterval, timingInterval) => {
     sendBoardStateTo();
     clearInterval(tickingInterval);
     clearInterval(timingInterval);
-    serverStore.dispatch(stopAndResetGame());
     checkVictoryCondition()
       ? io.emit('victory')
       : io.emit('failure');
-    setTimeout(checkForStartAgain, 10000);
+    serverStore.dispatch(stopAndResetGame());
+    setTimeout(() => {
+      serverStore.dispatch(clearBoard());
+      sendBoardStateTo();
+      checkForStartAgain();
+    }, 10000);
   }
 };
 
@@ -123,11 +128,12 @@ function checkForStartAgain () {
 
 let tickInterval;
 function startTickingGame () {
+  console.log(serverStore.getState().gameStatus);
   let timeInterval = setInterval(() => {
     serverStore.dispatch(decrementTime());
     io.emit('gameStatus', serverStore.getState().gameStatus);
   }, 995);
-  tickInterval = setInterval(() => {tickGameState(tickInterval, timeInterval);}, 995);
+  tickInterval = setInterval(() => {tickGameState(tickInterval, timeInterval);}, 500);
 
 }
 

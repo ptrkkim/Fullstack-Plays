@@ -38,7 +38,7 @@ const Board = ({ grid, size }) => {
 const mapState = ({ board }) => {
   return {
     grid: board.grid,
-    size: board.size
+    size: board.size,
   };
 };
 

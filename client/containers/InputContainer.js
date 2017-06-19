@@ -68,7 +68,7 @@ class InputContainer extends Component {
       return clearInput(); // set name and stop
     }
 
-    if (!inProgress && text === 'start') {
+    if (!inProgress && text === '/start') {
       emitStartGame();
       return clearInput();
     }

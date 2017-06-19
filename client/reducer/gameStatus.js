@@ -19,7 +19,11 @@ export const failure = () => ({type: FAILURE});
 export default function (state = defaultStatus, action) {
   switch (action.type) {
     case UPDATE_STATUS:
-      return Object.assign({}, state, {timeRemaining: action.timeRemaining});
+      return Object.assign({}, state, {
+        victory: null,
+        inProgress: action.inProgress,
+        timeRemaining: action.timeRemaining
+      });
     case VICTORY:
       return Object.assign({}, state, {inProgress: false, victory: 'victory'});
     case FAILURE:

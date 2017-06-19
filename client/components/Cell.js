@@ -1,4 +1,5 @@
 import React from 'react';
+import techLinks from '../../public/techstack';
 
 const Cell = ({ content, size }) => {
 
@@ -31,6 +32,17 @@ const Cell = ({ content, size }) => {
     backgroundColor: '#555'
   };
 
+  const buildImgStyles = (tech) => {
+    return {
+      width: '50%',
+      height: '50%',
+      backgroundSize: 'contain',
+      backgroundRepeat: 'no-repeat',
+      backgroundPosition: 'center center',
+      backgroundImage: `url(${techLinks[tech]})`
+    };
+  };
+
   const getContentStyle = contentType => {
     switch (contentType) {
       case 'player':
@@ -40,10 +52,34 @@ const Cell = ({ content, size }) => {
     }
   };
 
+  const buildImgs = (tech) => {
+    switch (tech) {
+      case 'js':
+        return buildImgStyles('js');
+      case 'react':
+        return buildImgStyles('react');
+      case 'node':
+        return buildImgStyles('node');
+      case 'css':
+        return buildImgStyles('css');
+      case 'io':
+        return buildImgStyles('io');
+      case 'redux':
+        return buildImgStyles('redux');
+      case 'html':
+        return buildImgStyles('html');
+      case 'sql':
+        return buildImgStyles('sql');
+      default:
+        return null;
+    }
+  };
+
   return (
     <div style={cellStyles}>
       <div style={contentStyles}>
-        <div style={getContentStyle(content)} />
+        <div style={techLinks[content] ? buildImgs(content) : getContentStyle(content)}>
+        </div>
       </div>
     </div>
   );

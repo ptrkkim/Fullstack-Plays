@@ -1,3 +1,4 @@
+const SECONDS = 30;
 // ACTIONS BELOW \\
 const DECREMENT = 'DECREMENT';
 const RESET = 'RESET';
@@ -10,18 +11,20 @@ const stopAndResetGame = () => ({type: RESET});
 
 const defaultStatus = {
   inProgress: false,
-  timeRemaining: 45
+  timeRemaining: SECONDS
 };
 
 // REDUCER BELOW \\
 const statusReducer = (state = defaultStatus, action) => {
   switch (action.type) {
     case START_GAME:
-      return {inProgress: true, timeRemaining: action.seconds};
+      return Object.assign({}, state, {inProgress: true, timeRemaining: action.seconds});
     case RESET:
-      return {inProgress: false, timeRemaining: 45};
+      return Object.assign({}, state, {inProgress: false, timeRemaining: SECONDS});
     case DECREMENT:
-      return Object.assign({}, state, {timeRemaining: state.timeRemaining - 1});
+      return state.timeRemaining > 1
+        ? Object.assign({}, state, {inProgress: true, timeRemaining: state.timeRemaining - 1})
+        : Object.assign({}, state, {inProgress: false, timeRemaining: 0});
     default:
       return state;
   }
