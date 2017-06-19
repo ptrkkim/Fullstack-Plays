@@ -2,6 +2,7 @@ const server = require('./app');
 const socketio = require('socket.io');
 // const increment = require('./serverReducer/number').incrementNumber;
 const move = require('./serverReducer/gameBoard').move;
+const resetBoard = require('./serverReducer/gameBoard').resetBoard;
 const addCommand = require('./serverReducer/commandAccumulator').addCommand;
 const clearCommands = require('./serverReducer/commandAccumulator').clearCommands;
 const addPlayer = require('./serverReducer/players').addPlayer;
@@ -13,6 +14,7 @@ const stopAndResetGame = require('./serverReducer/gameStatus').stopAndResetGame;
 const io = socketio(server);
 const serverStore = require('./serverStore');
 const SECONDS = 45;
+
 
 const sendBoardStateTo = (userSocket) => {
   const sharedBoard = serverStore.getState().gameBoard.grid;
@@ -92,13 +94,14 @@ const tickGameState = (tickingInterval, timingInterval) => {
     sendBoardStateTo();
   }
   else {
+    sendBoardStateTo();
     clearInterval(tickingInterval);
     clearInterval(timingInterval);
     serverStore.dispatch(stopAndResetGame);
     checkVictoryCondition()
       ? io.emit('victory')
       : io.emit('failure');
-    checkForStartAgain();
+    setTimeout(checkForStartAgain, 10000);
   }
 };
 
@@ -107,6 +110,8 @@ let checkForStart = setInterval(checkStart, 1000);
 function checkStart () {
   if (serverStore.getState().gameStatus.inProgress){
     clearInterval(checkForStart);
+    serverStore.dispatch(resetBoard);
+    sendBoardStateTo();
     startTickingGame();
   }
 }
@@ -117,10 +122,11 @@ function checkForStartAgain () {
 
 let tickInterval;
 function startTickingGame () {
-  let timeInterval = setInterval(() => serverStore.dispatch(decrementTime()), 995);
-  tickInterval = setInterval(() => {
-    tickGameState(tickInterval, timeInterval);
+  let timeInterval = setInterval(() => {
+    serverStore.dispatch(decrementTime());
+    io.emit('currentTime', serverStore.getState().gameStatus);
   }, 995);
+  tickInterval = setInterval(() => {tickGameState(tickInterval, timeInterval);}, 995);
 
 }
 

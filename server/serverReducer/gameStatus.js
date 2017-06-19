@@ -19,7 +19,7 @@ const statusReducer = (state = defaultStatus, action) => {
     case START_GAME:
       return {inProgress: true, timeRemaining: action.seconds};
     case RESET:
-      return {inProgress: false, timeRemaining: action.seconds};
+      return {inProgress: false, timeRemaining: 0};
     case DECREMENT:
       return Object.assign({}, state, {timeRemaining: state.timeRemaining - 1});
     default:

@@ -7,6 +7,7 @@ const directions = {
 };
 const { UP, DOWN, LEFT, RIGHT } = directions;
 const DO_NOTHING = 'DO_NOTHING';
+const RESET = 'RESET';
 
 // ACTION CREATORS BELOW \\
 const move = direction => {
@@ -15,10 +16,14 @@ const move = direction => {
     : {type: DO_NOTHING};
 };
 
+const resetBoard = () => {
+  return {type: RESET};
+};
+
 //REDUCER BELOW \\
-const gridSize = 5;
+const gridSize = 7;
 const gridStructure = Array(gridSize).fill(null).map((el, ind) => ind);
-const startPos = { row: 2, col: 2 };
+const startPos = { row: 3, col: 3 };
 const defaultBoard = {
   playerPos: startPos,
   grid: {}
@@ -34,17 +39,50 @@ gridStructure.forEach(index => {
 });
 
 defaultBoard.grid[`row${startPos.row}`][`col${startPos.col}`] = 'player';
+
+const seedBoard = () => {
+  const seededBoard = {
+    playerPos: startPos,
+    grid: {}
+  };
+
+  gridStructure.forEach(index => {
+    const rowInd = `row${index}`;
+    seededBoard.grid[rowInd] = {};
+    gridStructure.forEach(ind => {
+      const colInd = `col${ind}`;
+      seededBoard.grid[rowInd][colInd] = 'blank';
+    });
+  });
+
+  seededBoard.grid[`row${startPos.row}`][`col${startPos.col}`] = 'player';
+  // HARDCODE BECAUSE TIRED AND NEED TO GET A WORKING PRODUCT FAST
+
+  seededBoard.grid[`row2`][`col6`] = 'js';
+  seededBoard.grid[`row2`][`col1`] = 'react';
+  seededBoard.grid[`row3`][`col3`] = 'node';
+  seededBoard.grid[`row7`][`col4`] = 'css';
+  seededBoard.grid[`row5`][`col5`] = 'data';
+  seededBoard.grid[`row6`][`col2`] = 'redux';
+  seededBoard.grid[`row7`][`col7`] = 'html';
+  seededBoard.grid[`row1`][`col4`] = 'sql';
+  return seededBoard;
+};
 // const gridLooksLike = {
 //   row1: {col1: 'blank', col2: 'blank', col3: 'blank'},
 //   row2: {col1: 'blank', col2: 'blank', col3: 'blank'},
 //   row3: {col1: 'blank', col2: 'blank', col3: 'blank'},
 // };
 
+// actually don't return entirely new states in hopes of saving on perf?
+// ease of reasoning remains the same in these cases- nothing is subscribed
+
+
 const boardReducer = (state = defaultBoard, action) => {
   const { playerPos, grid } = state;
   switch (action.type) {
-      // will intentionally not returning entirely new state trigger selective rerender
-      // if nested objects become entirely new objects?
+    case RESET:
+      return seedBoard();
     case LEFT:
       return Object.assign(state, moveLeftAndRight(grid, playerPos, 'left'));
     case RIGHT:
@@ -117,5 +155,6 @@ function getOldPositionInfo (playerPos) {
 
 module.exports = {
   move,
+  resetBoard,
   boardReducer
 };
