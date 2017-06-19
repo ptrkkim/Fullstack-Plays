@@ -10,5 +10,5 @@ module.exports = combineReducers({
   gameBoard,
   players,
   commands,
-  gamestatus
+  gameStatus
 });

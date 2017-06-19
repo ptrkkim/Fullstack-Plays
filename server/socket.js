@@ -7,9 +7,12 @@ const clearCommands = require('./serverReducer/commandAccumulator').clearCommand
 const addPlayer = require('./serverReducer/players').addPlayer;
 const changeName = require('./serverReducer/players').changeName;
 const removePlayer = require('./serverReducer/players').removePlayer;
+const startGame = require('./serverReducer/gameStatus').startGame;
+const decrementTime = require('./serverReducer/gameStatus').decrementTime;
+const stopAndResetGame = require('./serverReducer/gameStatus').stopAndResetGame;
 const io = socketio(server);
 const serverStore = require('./serverStore');
-
+const SECONDS = 45;
 
 const sendBoardStateTo = (userSocket) => {
   const sharedBoard = serverStore.getState().gameBoard.grid;
@@ -33,7 +36,7 @@ const sendPlayerListTo = userOrAll => {
 io.on('connection', (userSocket) => {
   // when user connects...
   console.log(userSocket.id, 'a user connected');
-  sendBoardStateTo(userSocket);
+  // sendBoardStateTo(userSocket); everyone starts blank
   sendPlayerListTo(userSocket);
 
   // listeners e.g. if user emits newMsg...
@@ -53,6 +56,12 @@ io.on('connection', (userSocket) => {
   // accumulate commands
   userSocket.on('command', (command) => {
     serverStore.dispatch(addCommand(command));
+  });
+
+  userSocket.on('startGame', () => {
+    if (!serverStore.getState().gameStatus.inProgress) {
+      serverStore.dispatch(startGame(SECONDS));
+    }
   });
 
   userSocket.on('disconnect', () => {
@@ -75,13 +84,55 @@ const findMostCommon = (commandArr) =>
       : current;
   }, null);
 
-const tickGameState = () => {
-  const mostPopularCommand = findMostCommon(serverStore.getState().commands);
-  serverStore.dispatch(clearCommands());
-  serverStore.dispatch(move(mostPopularCommand));
-  sendBoardStateTo(); // to all if no argument
+const tickGameState = (tickingInterval, timingInterval) => {
+  if (serverStore.getState().gameStatus.timeRemaining > 0) {
+    const mostPopularCommand = findMostCommon(serverStore.getState().commands);
+    serverStore.dispatch(clearCommands());
+    serverStore.dispatch(move(mostPopularCommand));
+    sendBoardStateTo();
+  }
+  else {
+    clearInterval(tickingInterval);
+    clearInterval(timingInterval);
+    serverStore.dispatch(stopAndResetGame);
+    checkVictoryCondition()
+      ? io.emit('victory')
+      : io.emit('failure');
+    checkForStartAgain();
+  }
 };
-// SYNCS ALL CLIENTS ON AN INTERVAL
-setInterval(tickGameState, 995);
+
+// Waits for game to start.
+let checkForStart = setInterval(checkStart, 1000);
+function checkStart () {
+  if (serverStore.getState().gameStatus.inProgress){
+    clearInterval(checkForStart);
+    startTickingGame();
+  }
+}
+
+function checkForStartAgain () {
+  checkForStart = setInterval(checkStart, 1000);
+}
+
+let tickInterval;
+function startTickingGame () {
+  let timeInterval = setInterval(() => serverStore.dispatch(decrementTime()), 995);
+  tickInterval = setInterval(() => {
+    tickGameState(tickInterval, timeInterval);
+  }, 995);
+
+}
+
+function checkVictoryCondition () {
+  const grid = serverStore.getState().gameBoard.grid;
+  return Object.keys(grid).map(rowKey => {
+      return Object.keys(grid[rowKey]).map(colKey => grid[rowKey][colKey]);
+    })
+    .reduce((arr, valArr) => [...arr, ...valArr], [])
+    .filter(str => str !== 'blank')
+    .length === 1;
+}
+
 
 module.exports = server;
