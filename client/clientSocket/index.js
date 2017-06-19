@@ -19,7 +19,6 @@ export const clientSocket = io(window.location.host /*, { reconnect: true } */);
 
   clientSocket.on('setPlayers', (players) => {
     store.dispatch(setPlayers(players));
-    console.log(store.getState().players);
   });
 
   // in test case, storeState is simply an integer

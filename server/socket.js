@@ -70,6 +70,6 @@ io.on('connection', (userSocket) => {
 
 // SYNCS ALL CLIENTS ON AN INTERVAL
 // setInterval(sendNumberStateTo, 5000);
-setInterval(sendBoardStateTo, 1000);
+// setInterval(sendBoardStateTo, 1000);
 
 module.exports = server;

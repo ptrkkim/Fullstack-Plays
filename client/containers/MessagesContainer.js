@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
 import MessagesList from '../components/MessagesList';
 
@@ -8,19 +7,27 @@ class MessagesContainer extends Component {
     super(props);
   }
 
-  scrollToBottom () {
-    console.log('before scroll:', this.scrollRef.scrollTop);
-    this.scrollRef.scrollIntoView({ behavior: 'smooth' });
-    console.log('after scroll:', this.scrollRef.scrollTop);
+  componentWillUpdate() {
+    const magicOffsetNumber = 3.6363635063171387;
+    const node = this.container;
+    this.shouldScroll = node.scrollTop + magicOffsetNumber + node.offsetHeight >= node.scrollHeight;
   }
 
   componentDidUpdate() {
-    this.scrollToBottom();
+    const node = this.container;
+    if (this.shouldScroll) {
+      node.scrollTop = node.scrollHeight;
+    }
   }
 
   render() {
+    const containerStyles = {
+      overflowY: 'scroll',
+      height: 'inherit'
+    };
+
     return (
-      <div>
+      <div style={containerStyles} ref={ele => { this.container = ele; }}>
         <MessagesList messages={this.props.messages} />
         <div
           style={{ float: 'left', clear: 'both' }}

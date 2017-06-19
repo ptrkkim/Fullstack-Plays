@@ -7,8 +7,7 @@ const Sidebar = (props) => {
     backgroundColor: 'whitesmoke',
     marginTop: '10px',
     borderRadius: '5px',
-    height: '81vh',
-    overflowY: 'scroll'
+    height: '81vh'
   };
 
   return (
