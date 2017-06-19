@@ -28,6 +28,5 @@ export const clientSocket = io(window.location.host /*, { reconnect: true } */);
 
   clientSocket.on('updateBoard', (grid) => {
     store.dispatch(setBoard(grid));
-    // store.dispatch(updateGrid(grid));
   });
 })();

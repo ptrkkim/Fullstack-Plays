@@ -47,7 +47,4 @@ const mapState = ({ players, sender }) => ({
   name: sender.name
 });
 
-// sidebarcol: find a height, background-color: whitesmoke, background-clip content-box
-
 export default connect(mapState)(Main);
-

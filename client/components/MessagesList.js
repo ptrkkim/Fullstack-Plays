@@ -48,12 +48,3 @@ const MessagesList = ({ messages }) => {
 };
 
 export default MessagesList;
-// later: calculate li height * number of messages
-// .animate scrolltop: height
-
-
-// return (
-// <span style={nameStyle}>{`${message.sender}`}</span>
-// <span>:</span>
-// <span>{`${message.text}`}</span>
-// )
