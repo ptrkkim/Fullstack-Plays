@@ -1,7 +1,7 @@
 import { addMessage } from '../reducer/messages';
 import store from '../store';
 import io from 'socket.io-client';
-import { newNumber } from '../reducer/number';
+import { updateStatus, victory, failure } from '../reducer/gameStatus';
 import { setBoard } from '../reducer/board';
 import { setPlayers } from '../reducer/players';
 
@@ -21,9 +21,16 @@ export const clientSocket = io(window.location.host /*, { reconnect: true } */);
     store.dispatch(setPlayers(players));
   });
 
+  clientSocket.on('victory', () => {
+    store.dispatch(victory());
+  });
+
+  clientSocket.on('failure', () => {
+    store.dispatch(failure());
+  });
   // in test case, storeState is simply an integer
-  clientSocket.on('updateNumber', (serverStoreState) => {
-    store.dispatch(newNumber(serverStoreState));
+  clientSocket.on('gameStatus', (serverGameStatus) => {
+    store.dispatch(updateStatus(serverGameStatus));
   });
 
   clientSocket.on('updateBoard', (grid) => {

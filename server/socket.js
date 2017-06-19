@@ -124,7 +124,7 @@ let tickInterval;
 function startTickingGame () {
   let timeInterval = setInterval(() => {
     serverStore.dispatch(decrementTime());
-    io.emit('currentTime', serverStore.getState().gameStatus);
+    io.emit('gameStatus', serverStore.getState().gameStatus);
   }, 995);
   tickInterval = setInterval(() => {tickGameState(tickInterval, timeInterval);}, 995);
 
