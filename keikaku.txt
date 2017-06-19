@@ -1,7 +1,7 @@
 `
 
 Major features left to implement before end of stackathon:
-  1. Messages overflow and scroll when new messages arrive
+  DONE!!!!!!!!! 1. Messages overflow and scroll when new messages arrive
   2. Accumulate inputs over a time period
 
   DONEZO 3. Display Player count
@@ -9,7 +9,7 @@ Major features left to implement before end of stackathon:
 
   5. low prio: slack style :emotes:
      currently only twitch style works
-
+  6. low prio: disallow spaces in usernames
 
 
 `

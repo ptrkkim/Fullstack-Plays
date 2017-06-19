@@ -2,20 +2,17 @@ const server = require('./app');
 const socketio = require('socket.io');
 // const increment = require('./serverReducer/number').incrementNumber;
 const move = require('./serverReducer/gameBoard').move;
+const addCommand = require('./serverReducer/commandAccumulator').addCommand;
+const clearCommands = require('./serverReducer/commandAccumulator').clearCommands;
 const addPlayer = require('./serverReducer/players').addPlayer;
 const changeName = require('./serverReducer/players').changeName;
 const removePlayer = require('./serverReducer/players').removePlayer;
 const io = socketio(server);
 const serverStore = require('./serverStore');
 
-// const sendNumberStateTo = (userSocket) => {
-//   const currentNumber = serverStore.getState().number;
-//   if (userSocket) { userSocket.emit('updateNumber', currentNumber); }
-//   else { io.emit('updateNumber', currentNumber); }
-// };
 
 const sendBoardStateTo = (userSocket) => {
-  const sharedBoard = serverStore.getState().gameBoard.grid; // { row1 : {col1, col2}... }
+  const sharedBoard = serverStore.getState().gameBoard.grid;
   if (userSocket) { userSocket.emit('updateBoard', sharedBoard); }
   else { io.emit('updateBoard', sharedBoard); }
 };
@@ -34,7 +31,7 @@ const sendPlayerListTo = userOrAll => {
 };
 
 io.on('connection', (userSocket) => {
-  // things to do when user connects
+  // when user connects...
   console.log(userSocket.id, 'a user connected');
   sendBoardStateTo(userSocket);
   sendPlayerListTo(userSocket);
@@ -50,16 +47,15 @@ io.on('connection', (userSocket) => {
       serverStore.dispatch(addPlayer(userSocket.id, name));
     }
     else { serverStore.dispatch(changeName(userSocket.id, name)); }
-
     sendPlayerListTo(io);
   });
 
+  // accumulate commands
   userSocket.on('command', (command) => {
-    serverStore.dispatch(move(command)); // e.g. { type: 'LEFT' }
+    serverStore.dispatch(addCommand(command));
   });
 
   userSocket.on('disconnect', () => {
-    console.log(userSocket.id, 'disconnected');
     if (serverStore.getState().players.names[userSocket.id]) {
       serverStore.dispatch(removePlayer(userSocket.id));
       io.emit('setPlayers', serverStore.getState().players);
@@ -68,8 +64,24 @@ io.on('connection', (userSocket) => {
 
 });
 
+// on tie, defaults to first occurrence of any member of the tie
+// e.g. ['up', 'down', 'down', 'left', 'left', 'up', 'right'] => 'up'
+const findMostCommon = (commandArr) =>
+  commandArr.reduce((mostCommon, current, ind, arr) => {
+    const accCount = arr.filter(str => str === mostCommon).length;
+    const currentCount = arr.filter(str => str === current).length;
+    return accCount >= currentCount
+      ? mostCommon
+      : current;
+  }, null);
+
+const tickGameState = () => {
+  const mostPopularCommand = findMostCommon(serverStore.getState().commands);
+  serverStore.dispatch(clearCommands());
+  serverStore.dispatch(move(mostPopularCommand));
+  sendBoardStateTo(); // to all if no argument
+};
 // SYNCS ALL CLIENTS ON AN INTERVAL
-// setInterval(sendNumberStateTo, 5000);
-// setInterval(sendBoardStateTo, 1000);
+setInterval(tickGameState, 995);
 
 module.exports = server;

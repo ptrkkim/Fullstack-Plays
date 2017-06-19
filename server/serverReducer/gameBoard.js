@@ -6,9 +6,14 @@ const directions = {
   RIGHT: 'RIGHT'
 };
 const { UP, DOWN, LEFT, RIGHT } = directions;
+const DO_NOTHING = 'DO_NOTHING';
 
 // ACTION CREATORS BELOW \\
-const move = (direction) => ({ type: directions[direction] });
+const move = direction => {
+  return directions[direction]
+    ? {type: directions[direction]}
+    : {type: DO_NOTHING};
+};
 
 //REDUCER BELOW \\
 const gridSize = 5;
