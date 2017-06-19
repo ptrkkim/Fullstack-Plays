@@ -97,7 +97,7 @@ const tickGameState = (tickingInterval, timingInterval) => {
     sendBoardStateTo();
     clearInterval(tickingInterval);
     clearInterval(timingInterval);
-    serverStore.dispatch(stopAndResetGame);
+    serverStore.dispatch(stopAndResetGame());
     checkVictoryCondition()
       ? io.emit('victory')
       : io.emit('failure');
@@ -110,13 +110,14 @@ let checkForStart = setInterval(checkStart, 1000);
 function checkStart () {
   if (serverStore.getState().gameStatus.inProgress){
     clearInterval(checkForStart);
-    serverStore.dispatch(resetBoard);
+    serverStore.dispatch(resetBoard());
     sendBoardStateTo();
     startTickingGame();
   }
 }
 
 function checkForStartAgain () {
+  io.emit('gameStatus', serverStore.getState().gameStatus);
   checkForStart = setInterval(checkStart, 1000);
 }
 

@@ -6,7 +6,7 @@ const SET_BOARD = 'SET_BOARD';
 export const setBoard = grid => ({type: SET_BOARD, grid});
 
 // REDUCER BELOW \\
-const gridSize = 5;
+const gridSize = 7;
 const gridStructure = Array(gridSize).fill(null).map((el, ind) => ind);
 const defaultBoard = {
   size: gridSize,

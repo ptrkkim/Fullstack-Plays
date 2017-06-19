@@ -48,9 +48,9 @@ const ChatInput = ({ handleChange, handleSubmit, inputValue, warning, hasName })
 
   const howToPopover = (
     <Popover id="instructionPop" title="Instructions">
-      Type <strong>up</strong>, <strong>down</strong>, <strong>left</strong>, or <strong>right</strong> to help Geoff cool down.
+      Type <strong>up</strong>, <strong>down</strong>, <strong>left</strong>, or <strong>right</strong> to pick up and learn technologies.
       <br /> <br />
-      The blue ice cubes cool him down, but watch out for traps!
+      Work together to learn full stack web development!
     </Popover>
   );
 

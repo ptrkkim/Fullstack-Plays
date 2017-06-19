@@ -58,14 +58,14 @@ const seedBoard = () => {
   seededBoard.grid[`row${startPos.row}`][`col${startPos.col}`] = 'player';
   // HARDCODE BECAUSE TIRED AND NEED TO GET A WORKING PRODUCT FAST
 
-  seededBoard.grid[`row2`][`col6`] = 'js';
-  seededBoard.grid[`row2`][`col1`] = 'react';
-  seededBoard.grid[`row3`][`col3`] = 'node';
-  seededBoard.grid[`row7`][`col4`] = 'css';
-  seededBoard.grid[`row5`][`col5`] = 'data';
-  seededBoard.grid[`row6`][`col2`] = 'redux';
-  seededBoard.grid[`row7`][`col7`] = 'html';
-  seededBoard.grid[`row1`][`col4`] = 'sql';
+  seededBoard.grid[`row1`][`col5`] = 'js';
+  seededBoard.grid[`row1`][`col0`] = 'react';
+  seededBoard.grid[`row2`][`col2`] = 'node';
+  seededBoard.grid[`row6`][`col3`] = 'css';
+  seededBoard.grid[`row4`][`col4`] = 'data';
+  seededBoard.grid[`row5`][`col1`] = 'redux';
+  seededBoard.grid[`row6`][`col6`] = 'html';
+  seededBoard.grid[`row0`][`col3`] = 'sql';
   return seededBoard;
 };
 // const gridLooksLike = {

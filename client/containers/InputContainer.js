@@ -27,6 +27,10 @@ const emitPickName = name => {
   clientSocket.emit('pickName', name);
 };
 
+const emitStartGame = () => {
+  clientSocket.emit('startGame');
+};
+
 const nameIsTaken = name => {
   const namesArray = Object.keys(store.getState().players.names);
   return namesArray.find(nameKey => nameKey.toLowerCase() === name.toLowerCase());
@@ -54,28 +58,35 @@ class InputContainer extends Component {
     evt.preventDefault();
     const { name, color, dispatchName, dispatchColor } = this.props;
     const text = this.state.inputValue;
+    const { inProgress } = store.getState().gameStatus.inProgress;
+    const clearInput = () => this.setState({ inputValue: '' });
 
     // assumes that submit is disabled for taken names
     if (!name) {
       dispatchName(text);
       emitPickName(store.getState().sender.name);
-      return this.setState({ inputValue: '' }); // set name and stop
+      return clearInput(); // set name and stop
+    }
+
+    if (!inProgress && text === 'start') {
+      emitStartGame();
+      return clearInput();
     }
 
     if (text === '/rename') {
       dispatchName('');
-      return this.setState({ inputValue: '' });
+      return clearInput();
     }
 
     if (text.slice(0, 6).toLowerCase() === '/color') {
       dispatchColor(text.slice(7));
-      return this.setState({ inputValue: ''});
+      return clearInput();
     }
 
     else if (isCommand(text)) emitCommand(text.toUpperCase());
 
     emitMessage(name, color, text);
-    this.setState({ inputValue: '' });
+    clearInput();
   }
 
   render () {
