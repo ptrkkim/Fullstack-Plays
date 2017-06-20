@@ -1,6 +1,6 @@
-# Snake.tv
+# Fullstack Plays
 
-Inspired by Twitch Plays Pokemon, this is a team-based game where snakes are driven by collaborative user input.
+Inspired by Twitch Plays Pokemon, this is an app where users can collaboratively control a game character via chat commands.
 
 ## Setup
 
