@@ -16,7 +16,6 @@ const io = socketio(server);
 const serverStore = require('./serverStore');
 const SECONDS = 30;
 
-
 const sendBoardStateTo = (userSocket) => {
   const sharedBoard = serverStore.getState().gameBoard.grid;
   if (userSocket) { userSocket.emit('updateBoard', sharedBoard); }
