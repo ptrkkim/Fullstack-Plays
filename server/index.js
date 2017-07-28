@@ -3,6 +3,6 @@ const server = require('./socket');
 // const socketio = require('socket.io');
 // const io = socketio(server);
 
-server.listen(PORT, () => {
-  console.log(`slither slither on port ${PORT}`);
+server.listen(process.env.PORT || PORT, () => {
+  console.log(`slither slither on port ${process.env.PORT || PORT}`);
 });
