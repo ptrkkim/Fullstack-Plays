@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "postinstall": "webpack",
-    "start": "webpack & nodemon server",
+    "start": "node server",
+    "start-dev": "webpack & nodemon server",
     "start-server": "nodemon server",
     "build-client": "webpack"
   },
