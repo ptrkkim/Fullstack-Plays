@@ -4,6 +4,7 @@
   "description": "FSA Hackathon project. All connected users can interact via chat, and if they type a valid game command, the game state will change. Thus, users can collaboratively make decisions and play games together",
   "main": "index.js",
   "scripts": {
+    "postinstall": "webpack",
     "start": "webpack & nodemon server",
     "start-server": "nodemon server",
     "build-client": "webpack"
@@ -28,9 +29,7 @@
     "redux-logger": "^2.8.1",
     "redux-thunk": "^2.2.0",
     "socket.io": "^2.0.3",
-    "url-loader": "^0.5.9"
-  },
-  "devDependencies": {
+    "url-loader": "^0.5.9",
     "babel-core": "^6.22.1",
     "babel-loader": "^6.2.10",
     "babel-preset-es2015": "^6.22.0",
