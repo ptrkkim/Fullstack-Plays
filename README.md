@@ -3,6 +3,7 @@
 Inspired by Twitch Plays Pokémon, this is an app where users can collaboratively control a game character via chat commands.
 
 [This app is deployed, try it out!](https://fullstackplays.herokuapp.com)
+
 [Watch a demo with ~20 players!](http://www.youtube.com/watch?v=OtQwlBppBYY)
 
 
